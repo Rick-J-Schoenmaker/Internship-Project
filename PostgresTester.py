@@ -141,7 +141,6 @@ try:
     # noinspection PySimplifyBooleanCheck,PySimplifyBooleanCheck
     def Proteinwithinteraction():
         folders = []  # list with all the folders within the PDBBind 2018version folder.
-        files = []  # list with all the file paths
         for entry in os.scandir("/home/rick/Documenten/Rick'spdb"):
             if entry.is_dir():
                 folders.append(str(entry.path)[32:40].upper())  # fill list with folderpaths
@@ -158,7 +157,6 @@ try:
         for i in listpdbidsort:
             list6117.append(str(i).strip('(').strip(')').strip("'").replace("'", "").replace(",", ""))
         list6117.sort()
-        countfol = -1
         set1 = set(folders)
         set2 = set(list6117)
         missing = list(sorted(set1 - set2))
@@ -204,7 +202,6 @@ try:
             for entries in listcountperstructure:
                 outfile.write(str(entries))
                 outfile.write("\n")
-
 
     def DonorAcceptor():
         # donor Ligand - acceptor Protein interaction calculating function that prepares the list for extracting distances.
@@ -610,8 +607,6 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countinterl = 0
-        countinterp = 0
         countinterl = -4
         countinterp = -4
         countlx = -3
@@ -696,8 +691,6 @@ try:
         count8 = 0
         count9 = 0
         countdistancehydroluhydro = 0
-        countinterl = 0
-        countinterp = 0
         countinterl = -4
         countinterp = -4
         countlx = -3
@@ -885,7 +878,6 @@ try:
         print(count7)
         print(count8)
         print(count9)
-
 
     def CationAnion():
         # # Interactions between cation and anion #######################################################
@@ -1290,9 +1282,7 @@ try:
         print(count8)
         print(count9)
 
-
     connection.commit()
-
 
     def main():
         Statements()
@@ -1303,7 +1293,6 @@ try:
         Aromatic()
         CationAnion()
         CationAromatic()
-
 
     main()
 except (Exception, psycopg2.Error) as error:

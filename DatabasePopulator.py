@@ -1,5 +1,5 @@
 ### Author: Rick Schoenmaker
-### Version 1.8
+### Version 1.9
 ### Last updated: 26-11-19
 import math
 

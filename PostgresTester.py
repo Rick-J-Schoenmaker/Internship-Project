@@ -1,6 +1,6 @@
-#Author: Rick Schoenmaker
-#Date: 12-12-2019
-#Function: This script extracts data from the PROLI database and calculates numbers such as
+# Author: Rick Schoenmaker
+# Date: 12-12-2019
+# Function: This script extracts data from the PROLI database and calculates numbers such as
 # the amount of interactions and averages.
 import os
 
@@ -36,93 +36,109 @@ try:
     listAromaticLigandSortDup = []
     listAromaticProteinSortDup = []
 
+
     def Statements():
 
         # Extract pdb ids from the database of the protein groups that interact joined on atom ids.
-        cursor.execute("SELECT end_concept.pro_conform.pdb_id FROM end_concept.group_atoms INNER JOIN end_concept.interactions on group_id_pro = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id ")
+        cursor.execute(
+            "SELECT end_concept.pro_conform.pdb_id FROM end_concept.group_atoms INNER JOIN end_concept.interactions on group_id_pro = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id ")
         pdbid = cursor.fetchall()  # fetch the resulting pdb ids from the SQL statement
         for i in pdbid:
             pdbids.append(i)
 
         # Extract pdb ids and interaction ids from the database of the ligand groups that interact joined on atom ids.
-        cursor.execute("SELECT end_concept.lig_conform.pdb_id, end_concept.interactions.inter_id FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON atom_id_fk = atom_id")
+        cursor.execute(
+            "SELECT end_concept.lig_conform.pdb_id, end_concept.interactions.inter_id FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON atom_id_fk = atom_id")
         interli = cursor.fetchall()
         for i in interli:
             interactionspdb.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.lig_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON group_atoms.atom_id_fk = lig_conform.atom_id WHERE group_type_id_fk = 1")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.lig_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON group_atoms.atom_id_fk = lig_conform.atom_id WHERE group_type_id_fk = 1")
         donorli = cursor.fetchall()
         for i in donorli:
             donorLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.pro_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id WHERE group_type_id_fk = 1 ")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.pro_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id WHERE group_type_id_fk = 1 ")
         donorpro = cursor.fetchall()
         for i in donorpro:
             donorProtein.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id,end_concept.lig_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON group_atoms.atom_id_fk = lig_conform.atom_id WHERE group_type_id_fk = 2")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id,end_concept.lig_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id INNER JOIN end_concept.lig_conform ON group_atoms.atom_id_fk = lig_conform.atom_id WHERE group_type_id_fk = 2")
         acceptorli = cursor.fetchall()
         for i in acceptorli:
             acceptorLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id,end_concept.pro_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id WHERE group_type_id_fk =  2")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id,end_concept.pro_conform.x, y, z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id WHERE group_type_id_fk =  2")
         acceptorpro = cursor.fetchall()
         for i in acceptorpro:
             acceptorProtein.append(i)
 
-
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  3")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  3")
         aromaticli = cursor.fetchall()
         for i in aromaticli:
             aromaticLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  3")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  3")
         aromaticpro = cursor.fetchall()
         for i in aromaticpro:
             aromaticProtein.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  4 ")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  4 ")
         hydrophobeli = cursor.fetchall()
         for i in hydrophobeli:
             hydrophobeLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk =  4 ")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk =  4 ")
         hydrophobepro = cursor.fetchall()
         for i in hydrophobepro:
             hydrophobeProtein.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  5 ")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  5 ")
         hydrophobelumpedli = cursor.fetchall()
         for i in hydrophobelumpedli:
             hydrophobeLumpedLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  5 ")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  5 ")
         hydrophobelumpedpro = cursor.fetchall()
         for i in hydrophobelumpedpro:
             hydrophobeLumpedProtein.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  6")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  6")
         posionizableli = cursor.fetchall()
         for i in posionizableli:
             posionizableLigand.append(i)
 
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  6")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id  WHERE group_type_id_fk =  6")
         posionizablepro = cursor.fetchall()
         for i in posionizablepro:
             posionizableProtein.append(i)
 
-
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id  WHERE group_type_id_fk = 8")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id  WHERE group_type_id_fk = 8")
         negionizableli = cursor.fetchall()
         for i in negionizableli:
             negionizableLigand.append(i)
 
-
-        cursor.execute("SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk = 8")
+        cursor.execute(
+            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk = 8")
         negionizablepro = cursor.fetchall()
         for i in negionizablepro:
             negionizableProtein.append(i)
 
+
+    # noinspection PySimplifyBooleanCheck,PySimplifyBooleanCheck
     def Proteinwithinteraction():
         folders = []  # list with all the folders within the PDBBind 2018version folder.
         files = []  # list with all the file paths
@@ -131,7 +147,7 @@ try:
                 folders.append(str(entry.path)[32:40].upper())  # fill list with folderpaths
         folders.sort()  # Sort the list with folders
         listpdbidsort = []  # Initializing  a list for sorted pdb ids without duplicates
-        count = 0    # Initializing  a count
+        count = 0  # Initializing  a count
         countpdbid = -1
         for i in pdbids:
             countpdbid += 1
@@ -149,7 +165,7 @@ try:
         print(missing)
 
 
-    def Calcaverageinteraction ():
+    def Calcaverageinteraction():
         strinteractionspdb = ''.join(str(e) for e in interactionspdb)
         strinteractionspdb = strinteractionspdb.replace(")", ',')
         listinteractionspdb = strinteractionspdb.split(",")
@@ -157,11 +173,11 @@ try:
         listinteractionspdb = [s.replace("(", '') for s in listinteractionspdb]
         listinteractionspdb = [s.strip("''") for s in listinteractionspdb]
 
-        countlistinter = len(listinteractionspdb)-2
+        countlistinter = len(listinteractionspdb) - 2
         listcountperstructure = []
-        countaverageinter= 0
+        countaverageinter = 0
         templist = []
-        countpdb= -2
+        countpdb = -2
         countinter = -1
         interlist = []
         while countinter != countlistinter:
@@ -173,8 +189,8 @@ try:
         print(len(templist))
         print(interlist[0:20])
         count = -1
-        while count != len(list6117)-1:
-            count +=1
+        while count != len(list6117) - 1:
+            count += 1
             print(count)
             listcountperstructure.append(list6117.__getitem__(count))
             listcountperstructure.append(interlist.count(list6117.__getitem__(count)))
@@ -184,14 +200,14 @@ try:
         print(countaverageinter)
         print(len(listcountperstructure))
 
-
         with open("/home/rick/countinterperstuc.csv", "w") as outfile:
             for entries in listcountperstructure:
                 outfile.write(str(entries))
                 outfile.write("\n")
 
-    def DonorAcceptor ():
-    #donor Ligand - acceptor Protein interaction calculating function that prepares the list for extracting distances.
+
+    def DonorAcceptor():
+        # donor Ligand - acceptor Protein interaction calculating function that prepares the list for extracting distances.
         donorLigand.sort()
         acceptorProtein.sort()
         strdonorligand = ''.join(str(e) for e in donorLigand)
@@ -221,8 +237,10 @@ try:
         count8 = 0
         count9 = 0
         while count != len(donorLigand):
-            a = numpy.array((float(listDonorLigandSort[countx]), float(listDonorLigandSort[county]), float(listDonorLigandSort[countz])))
-            b = numpy.array((float(listAcceptorProteinSort[countx]), float(listAcceptorProteinSort[county]), float(listAcceptorProteinSort[countz])))
+            a = numpy.array((float(listDonorLigandSort[countx]), float(listDonorLigandSort[county]),
+                             float(listDonorLigandSort[countz])))
+            b = numpy.array((float(listAcceptorProteinSort[countx]), float(listAcceptorProteinSort[county]),
+                             float(listAcceptorProteinSort[countz])))
             dist = numpy.linalg.norm(a - b)
             countdistancedalp += dist
             countx += 4
@@ -250,7 +268,7 @@ try:
             if 4.5 <= dist <= 5:
                 count9 += 1
         print("Average distance between LigandDonor and ProteinAcceptor:")
-        print(countdistancedalp/len(donorLigand))
+        print(countdistancedalp / len(donorLigand))
         print("Distances LigandDonor and ProteinAcceptor")
         print(count0)
         print(count1)
@@ -343,7 +361,9 @@ try:
 
         print("Total number of interactions between Donors and Acceptors:")
         print(len(donorProtein) + len(donorLigand))
-    def Hydrophobic ():
+
+
+    def Hydrophobic():
         ## Interaction between Hydrophobic atoms.
         hydrophobeLigand.sort()
         hydrophobeProtein.sort()
@@ -413,10 +433,12 @@ try:
                 countpy += 4
                 countpz += 4
                 if listHydrophobeLigandSortDup[countinterl] == listHydrophobeProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
-                                     float(listHydrophobeLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
-                                    float(listHydrophobeProteinSortDup[countpz])))
+                    a = numpy.array(
+                        (float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
+                         float(listHydrophobeLigandSortDup[countlz])))
+                    b = numpy.array(
+                        (float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
+                         float(listHydrophobeProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
                     countdistancehydrohydro += dist
@@ -528,9 +550,11 @@ try:
                 countpy += 4
                 countpz += 4
                 if listHydrophobeLumpedLigandSortDup[countinterl] == listHydrophobeLumpedProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]), float(listHydrophobeLumpedLigandSortDup[countly]),
+                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]),
+                                     float(listHydrophobeLumpedLigandSortDup[countly]),
                                      float(listHydrophobeLumpedLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]), float(listHydrophobeLumpedProteinSortDup[countpy]),
+                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]),
+                                     float(listHydrophobeLumpedProteinSortDup[countpy]),
                                      float(listHydrophobeLumpedProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
@@ -561,7 +585,8 @@ try:
             countpz = -1
         print("Average distance between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydroluhydrolu / countnumberinter)
-        print("Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
+        print(
+            "Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -610,9 +635,11 @@ try:
                 countpy += 4
                 countpz += 4
                 if listHydrophobeLigandSortDup[countinterl] == listHydrophobeLumpedProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
-                                     float(listHydrophobeLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]), float(listHydrophobeLumpedProteinSortDup[countpy]),
+                    a = numpy.array(
+                        (float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
+                         float(listHydrophobeLigandSortDup[countlz])))
+                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]),
+                                     float(listHydrophobeLumpedProteinSortDup[countpy]),
                                      float(listHydrophobeLumpedProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
@@ -643,7 +670,8 @@ try:
             countpz = -1
         print("Average distance between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydrohydrolu / countnumberinter)
-        print("Number of interactions between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
+        print(
+            "Number of interactions between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -692,10 +720,12 @@ try:
                 countpy += 4
                 countpz += 4
                 if listHydrophobeLumpedLigandSortDup[countinterl] == listHydrophobeProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]), float(listHydrophobeLumpedLigandSortDup[countly]),
+                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]),
+                                     float(listHydrophobeLumpedLigandSortDup[countly]),
                                      float(listHydrophobeLumpedLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
-                                     float(listHydrophobeProteinSortDup[countpz])))
+                    b = numpy.array(
+                        (float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
+                         float(listHydrophobeProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
                     countdistancehydroluhydro += dist
@@ -725,7 +755,8 @@ try:
             countpz = -1
         print("Average distance between LumpedHydrophobe atoms on the ligand and a Hydrophobe atom on the protein")
         print(countdistancehydroluhydro / countnumberinter)
-        print("Number of interactions between LumpedHydrophobe atoms on the ligand and a Hydrophobe atom on the protein")
+        print(
+            "Number of interactions between LumpedHydrophobe atoms on the ligand and a Hydrophobe atom on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -737,6 +768,7 @@ try:
         print(count7)
         print(count8)
         print(count9)
+
 
     def Aromatic():
         # Interactions between aromatic rings parts:
@@ -769,12 +801,12 @@ try:
         listcountaromatic = []
         countidlig = 0
         countidpro = 0
-        while countidlig+3 <= len(listAromaticLigandSort):
-            if  listAromaticLigandSortDup.__contains__(listAromaticLigandSort[countidlig]) == False:
+        while countidlig + 3 <= len(listAromaticLigandSort):
+            if listAromaticLigandSortDup.__contains__(listAromaticLigandSort[countidlig]) == False:
                 listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig+1])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig+2])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig+3])
+                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 1])
+                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 2])
+                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 3])
             countidlig += 4
         while countidpro + 3 <= len(listAromaticProteinSort):
             if listAromaticProteinSortDup.__contains__(listAromaticProteinSort[countidpro]) == False:
@@ -806,10 +838,12 @@ try:
                 countpy += 4
                 countpz += 4
                 if listAromaticLigandSortDup[countinterl] == listAromaticProteinSortDup[countinterp]:
-                    a = numpy.array((float(listAromaticLigandSortDup[countlx]), float(listAromaticLigandSortDup[countly]),
-                                     float(listAromaticLigandSortDup[countlz])))
-                    b = numpy.array((float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
-                                    float(listAromaticProteinSortDup[countpz])))
+                    a = numpy.array(
+                        (float(listAromaticLigandSortDup[countlx]), float(listAromaticLigandSortDup[countly]),
+                         float(listAromaticLigandSortDup[countlz])))
+                    b = numpy.array(
+                        (float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
+                         float(listAromaticProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countdistancearoaro += dist
                     countnumberinter += 1
@@ -851,6 +885,8 @@ try:
         print(count7)
         print(count8)
         print(count9)
+
+
     def CationAnion():
         # # Interactions between cation and anion #######################################################
         posionizableLigand.sort()
@@ -897,12 +933,12 @@ try:
         listNegionizableProteinSortDup = []
         countidlig = 0
         countidpro = 0
-        while countidlig+3 <= len(listPosionizableLigandSort):
+        while countidlig + 3 <= len(listPosionizableLigandSort):
             if listPosionizableLigandSortDup.__contains__(listPosionizableLigandSort[countidlig]) == False:
                 listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig+1])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig+2])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig+3])
+                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 1])
+                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 2])
+                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 3])
             countidlig += 4
         while countidpro + 3 <= len(listNegionizableProteinSort):
             if listNegionizableProteinSortDup.__contains__(listNegionizableProteinSort[countidpro]) == False:
@@ -935,10 +971,12 @@ try:
                 countpy += 4
                 countpz += 4
                 if listPosionizableLigandSortDup[countinterl] == listNegionizableProteinSortDup[countinterp]:
-                    a = numpy.array((float(listPosionizableLigandSortDup[countlx]), float(listPosionizableLigandSortDup[countly]),
-                                     float(listPosionizableLigandSortDup[countlz])))
-                    b = numpy.array((float(listNegionizableProteinSortDup[countpx]), float(listNegionizableProteinSortDup[countpy]),
-                                     float(listNegionizableProteinSortDup[countpz])))
+                    a = numpy.array(
+                        (float(listPosionizableLigandSortDup[countlx]), float(listPosionizableLigandSortDup[countly]),
+                         float(listPosionizableLigandSortDup[countlz])))
+                    b = numpy.array(
+                        (float(listNegionizableProteinSortDup[countpx]), float(listNegionizableProteinSortDup[countpy]),
+                         float(listNegionizableProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countdistanceposlnegp += dist
                     countnumberinter += 1
@@ -981,7 +1019,7 @@ try:
         print(count8)
         print(count9)
 
-    ###### anion on ligand with cation on protein
+        ###### anion on ligand with cation on protein
         countinterl = -4
         countinterp = -4
         countlx = -3
@@ -1021,8 +1059,8 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthlig = len(listNegionizableLigandSortDup) -4
-        countlengthpro = len(listPosionizableProteinSortDup) -4
+        countlengthlig = len(listNegionizableLigandSortDup) - 4
+        countlengthpro = len(listPosionizableProteinSortDup) - 4
         while countinterl != countlengthlig:
             countinterl += 4
             countlx += 4
@@ -1082,8 +1120,9 @@ try:
         print(count8)
         print(count9)
 
+
     def CationAromatic():
-        #Interactions between cation on ligand and aromatic rings on the protein.
+        # Interactions between cation on ligand and aromatic rings on the protein.
         count0 = 0
         count1 = 0
         count2 = 0
@@ -1122,8 +1161,9 @@ try:
                     a = numpy.array(
                         (float(listPosionizableLigandSortDup[countlx]), float(listPosionizableLigandSortDup[countly]),
                          float(listPosionizableLigandSortDup[countlz])))
-                    b = numpy.array((float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
-                                     float(listAromaticProteinSortDup[countpz])))
+                    b = numpy.array(
+                        (float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
+                         float(listAromaticProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
                     countdistancecatlarop += dist
@@ -1205,8 +1245,9 @@ try:
                     a = numpy.array(
                         (float(listAromaticLigandSortDup[countlx]), float(listAromaticLigandSortDup[countly]),
                          float(listAromaticLigandSortDup[countlz])))
-                    b = numpy.array((float(listPosionizableProteinSortDup[countpx]), float(listPosionizableProteinSortDup[countpy]),
-                                     float(listPosionizableProteinSortDup[countpz])))
+                    b = numpy.array(
+                        (float(listPosionizableProteinSortDup[countpx]), float(listPosionizableProteinSortDup[countpy]),
+                         float(listPosionizableProteinSortDup[countpz])))
                     dist = numpy.linalg.norm(a - b)
                     countnumberinter += 1
                     countdistancearolcatp += dist
@@ -1248,6 +1289,8 @@ try:
         print(count7)
         print(count8)
         print(count9)
+
+
     connection.commit()
 
 
@@ -1260,6 +1303,8 @@ try:
         Aromatic()
         CationAnion()
         CationAromatic()
+
+
     main()
 except (Exception, psycopg2.Error) as error:
     print("Error while connecting to PostgreSQL", error)

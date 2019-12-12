@@ -2,7 +2,6 @@
 # Date: 12-12-2019
 # Function: This script extracts data from the PROLI database and calculates numbers such as
 # the amount of interactions and averages.
-#test
 import os
 
 import numpy

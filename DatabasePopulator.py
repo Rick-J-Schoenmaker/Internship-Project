@@ -541,8 +541,8 @@ def ProteinData():
                                       database="postgres")
 
         cursor = connection.cursor()
-        # cursor.execute("DELETE FROM end_concept.protein *")  # SQL statement to delete rows from protein table.
-        # cursor.execute("DELETE FROM end_concept.interacting_ligand_protein *")  # SQL statement to delete rows from ligand table.
+        cursor.execute("DELETE FROM end_concept.protein *")  # SQL statement to delete rows from protein table.
+        cursor.execute("DELETE FROM end_concept.interacting_ligand_protein *")  # SQL statement to delete rows from ligand table.
         cursor.execute("DELETE FROM end_concept.pro_conform *")  # SQL statement to delete rows from protein_atoms table.
 
         sqll = "INSERT INTO end_concept.interacting_ligand_protein(ligand_id,protein_id) VALUES (%s,%s)"  # SQL statement for ligand data.
@@ -678,10 +678,10 @@ def ProteinData():
 def main():
     openfolder()
     Protein_LigandData()
-    # Mol2Splitter()
-    # PDBProteinParser()
+    Mol2Splitter()
+    PDBProteinParser()
     Interactions()
-    # ProteinData()
+    ProteinData()
 
 
 

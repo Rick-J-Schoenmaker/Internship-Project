@@ -185,11 +185,9 @@ try:
                 templist.append(listinteractionspdb.__getitem__(countinter))
                 interlist.append(listinteractionspdb.__getitem__(countpdb))
         print(len(templist))
-        print(interlist[0:20])
         count = -1
         while count != len(list6117) - 1:
             count += 1
-            print(count)
             listcountperstructure.append(list6117.__getitem__(count))
             listcountperstructure.append(interlist.count(list6117.__getitem__(count)))
             countaverageinter += interlist.count(list6117.__getitem__(count))

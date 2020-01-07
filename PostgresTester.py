@@ -38,7 +38,6 @@ try:
 
 
     def Statements():
-
         # Extract pdb ids from the database of the protein groups that interact joined on atom ids.
         cursor.execute(
             "SELECT end_concept.pro_conform.pdb_id FROM end_concept.group_atoms INNER JOIN end_concept.interactions on group_id_pro = group_id INNER JOIN end_concept.pro_conform ON group_atoms.atom_id_fk = pro_conform.atom_id ")

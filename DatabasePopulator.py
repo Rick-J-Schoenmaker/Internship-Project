@@ -499,13 +499,17 @@ def Interactions():
                     a = numpy.array(kp)
                     b = numpy.array(kl)
                     dist = numpy.linalg.norm(a - b)
-                    # Selects hydrophobic and aromatic interactions with a 5 angstrom cut-off
-                    if dict_groupid.get(dict_ligand.get(kl)) == 3 and dict_groupid.get(dict_protein.get(kp)) == 3 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 4 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 5 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 5 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 4:
+                    # Selects aromatic interactions with a 5 angstrom cut-off
+                    if dict_groupid.get(dict_ligand.get(kl)) == 3 and dict_groupid.get(dict_protein.get(kp)) == 3:
                         if dist <= 5:
+                            valinter = (dict_ligand.get(kl), dict_protein.get(kp))
+                            cursor.execute(sqlinter, valinter)
+                    #  Selects hydrophobic interactions with a 4.5 angstrom cut-off
+                    if dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 4 or \
+                    dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
+                    dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
+                    dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 4:
+                        if dist <= 4.5:
                             valinter = (dict_ligand.get(kl), dict_protein.get(kp))
                             cursor.execute(sqlinter, valinter)
                     # Selects donor-acceptor interactions with a 4.4 angstrom cut-off

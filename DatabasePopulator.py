@@ -688,8 +688,8 @@ def main():
     openfolder()
     Protein_LigandData()
     Mol2Splitter()
-    # PDBProteinParser()
-    # Interactions()
+    PDBProteinParser()
+    Interactions()
     # ProteinData()
 
 

@@ -64,6 +64,7 @@ groups_protein_ligand = []
 interaction_protein = []
 interaction_ligand = []
 
+Hydrophobic_list = ["ALA", "VAL", "ILE", "LEU", "MET", "PHE", "TYR", "TRP"]
 
 def openfolder():
     # folder with all subfolders
@@ -137,11 +138,11 @@ def Protein_LigandData():
                                       port="5433",
                                       database="postgres")
         cursor = connection.cursor()
-        cursor.execute("DELETE FROM end_concept.atoms *")
-        cursor.execute("DELETE FROM end_concept.group_type *")
-        cursor.execute("DELETE FROM end_concept.lig_conform *") # SQL statement to delete rows from ligand_atoms table.
-        cursor.execute("DELETE FROM end_concept.group_atoms *")
-        cursor.execute("DELETE FROM end_concept.pro_conform *") # SQL statement to delete rows from protein_atoms table.
+        # cursor.execute("DELETE FROM end_concept.atoms *")
+        # cursor.execute("DELETE FROM end_concept.group_type *")
+        # cursor.execute("DELETE FROM end_concept.lig_conform *") # SQL statement to delete rows from ligand_atoms table.
+        # cursor.execute("DELETE FROM end_concept.group_atoms *")
+        # cursor.execute("DELETE FROM end_concept.pro_conform *") # SQL statement to delete rows from protein_atoms table.
         sqlla = "INSERT INTO end_concept.lig_conform(pdb_id, lig_id, atom_id, x, y, z)" \
                 " VALUES (%s,%s,%s,%s,%s,%s)"  # SQL statement to fill the ligand_atoms.
         sqlg = "INSERT INTO end_concept.group_type(group_type_id, type)  VALUES(%s,%s) "
@@ -162,6 +163,7 @@ def Protein_LigandData():
         countposionizable = 5
         countznbinder = 6
         countnegionizable =7
+        countamino = 0
         for i in pdbPocketFile:
             count += 1
             print(count)
@@ -184,6 +186,8 @@ def Protein_LigandData():
                     rwm = Chem.RWMol(pdbmol)
                     idx = rwm.AddAtom(at)
                     newat = rwm.GetAtomWithIdx(idx)
+                    aa = rwm.GetAtomWithIdx(atomid).GetPDBResidueInfo().GetResidueName()
+                    countamino += 1
                     valpro = (i[37:41].upper(), str(newat.GetPDBResidueInfo().GetChainId()), coords_protein.x,
                               coords_protein.y, coords_protein.z, count_ligand_atoms)  # Values for SQL statement.
                     cursor.execute(sqlpro, valpro)  # Execute SQL statement.
@@ -213,7 +217,7 @@ def Protein_LigandData():
                         groups_protein_ligand.append(countaromatic)
                         interaction_protein.append(i[35:39])
                         group_type.append(3)
-                    if "Hydrophobe" in family_protein:
+                    if "Hydrophobe" in family_protein and aa in Hydrophobic_list:
                         valga = (4, count_ligand_atoms, counthydrophobe, pos_protein.x, pos_protein.y, pos_protein.z)  # Values for SQL statement.
                         cursor.execute(sqlga, valga)  # Execute SQL statement.
                         position_protein.append(pos_protein)
@@ -222,7 +226,8 @@ def Protein_LigandData():
                         interaction_protein.append(i[35:39])
                         group_type.append(4)
                         counthydrophobe += 8
-                    if "LumpedHydrophobe" in family_protein:
+                        print(aa)
+                    if "LumpedHydrophobe" in family_protein and aa in Hydrophobic_list:
                         valga = (5, count_ligand_atoms, countlumpedhydrophobe, pos_protein.x, pos_protein.y, pos_protein.z)  # Values for SQL statement.
                         cursor.execute(sqlga, valga)  # Execute SQL statement.
                         position_protein.append(pos_protein)
@@ -323,7 +328,7 @@ def Protein_LigandData():
                             groups_protein_ligand.append(countaromatic)
                             interaction_ligand.append(x[35:39])
                             group_type.append(3)
-                        if "Hydrophobe" in family_ligand:
+                        if "Hydrophobe" in family_ligand and aa in Hydrophobic_list:
                             valga = (4, count_ligand_atoms, counthydrophobe, pos_ligand.x, pos_ligand.y, pos_ligand.z)  # Values for SQL statement.
                             cursor.execute(sqlga, valga)  # Execute SQL statement.
                             position_ligand.append(pos_ligand)
@@ -332,7 +337,7 @@ def Protein_LigandData():
                             interaction_ligand.append(x[35:39])
                             group_type.append(4)
                             counthydrophobe += 8
-                        if "LumpedHydrophobe" in family_ligand:
+                        if "LumpedHydrophobe" in family_ligand and aa in Hydrophobic_list:
                             valga = (5, count_ligand_atoms, countlumpedhydrophobe, pos_ligand.x, pos_ligand.y, pos_ligand.z)  # Values for SQL statement.
                             cursor.execute(sqlga, valga)  # Execute SQL statement.
                             position_ligand.append(pos_ligand)
@@ -679,9 +684,9 @@ def main():
     openfolder()
     Protein_LigandData()
     Mol2Splitter()
-    PDBProteinParser()
-    Interactions()
-    ProteinData()
+    # PDBProteinParser()
+    # Interactions()
+    # ProteinData()
 
 
 

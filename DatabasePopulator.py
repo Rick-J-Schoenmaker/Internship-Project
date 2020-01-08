@@ -138,11 +138,11 @@ def Protein_LigandData():
                                       port="5433",
                                       database="postgres")
         cursor = connection.cursor()
-        # cursor.execute("DELETE FROM end_concept.atoms *")
-        # cursor.execute("DELETE FROM end_concept.group_type *")
-        # cursor.execute("DELETE FROM end_concept.lig_conform *") # SQL statement to delete rows from ligand_atoms table.
-        # cursor.execute("DELETE FROM end_concept.group_atoms *")
-        # cursor.execute("DELETE FROM end_concept.pro_conform *") # SQL statement to delete rows from protein_atoms table.
+        cursor.execute("DELETE FROM end_concept.atoms *")
+        cursor.execute("DELETE FROM end_concept.group_type *")
+        cursor.execute("DELETE FROM end_concept.lig_conform *") # SQL statement to delete rows from ligand_atoms table.
+        cursor.execute("DELETE FROM end_concept.group_atoms *")
+        cursor.execute("DELETE FROM end_concept.pro_conform *") # SQL statement to delete rows from protein_atoms table.
         sqlla = "INSERT INTO end_concept.lig_conform(pdb_id, lig_id, atom_id, x, y, z)" \
                 " VALUES (%s,%s,%s,%s,%s,%s)"  # SQL statement to fill the ligand_atoms.
         sqlg = "INSERT INTO end_concept.group_type(group_type_id, type)  VALUES(%s,%s) "
@@ -226,7 +226,6 @@ def Protein_LigandData():
                         interaction_protein.append(i[35:39])
                         group_type.append(4)
                         counthydrophobe += 8
-                        print(aa)
                     if "LumpedHydrophobe" in family_protein and aa in Hydrophobic_list:
                         valga = (5, count_ligand_atoms, countlumpedhydrophobe, pos_protein.x, pos_protein.y, pos_protein.z)  # Values for SQL statement.
                         cursor.execute(sqlga, valga)  # Execute SQL statement.

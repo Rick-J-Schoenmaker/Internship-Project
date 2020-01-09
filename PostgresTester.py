@@ -160,7 +160,8 @@ try:
         set2 = set(list6117)
         missing = list(sorted(set1 - set2))
         print(missing)
-
+        print(len(set1))
+        print(len(set2))
 
     def Calcaverageinteraction():
         strinteractionspdb = ''.join(str(e) for e in interactionspdb)

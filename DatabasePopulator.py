@@ -220,7 +220,7 @@ def Protein_LigandData():
                     if "Hydrophobe" in family_protein and aa in Hydrophobic_list:
                         valga = (4, count_ligand_atoms, counthydrophobe, coords_protein.x, coords_protein.y, coords_protein.z)  # Values for SQL statement.
                         cursor.execute(sqlga, valga)  # Execute SQL statement.
-                        position_protein.append(pos_protein)
+                        position_protein.append(coords_protein)
                         group_protein.append(counthydrophobe)
                         groups_protein_ligand.append(counthydrophobe)
                         interaction_protein.append(i[35:39])
@@ -328,9 +328,9 @@ def Protein_LigandData():
                             interaction_ligand.append(x[35:39])
                             group_type.append(3)
                         if "Hydrophobe" in family_ligand and aa in Hydrophobic_list:
-                            valga = (4, count_ligand_atoms, counthydrophobe, pos_ligand.x, pos_ligand.y, pos_ligand.z)  # Values for SQL statement.
+                            valga = (4, count_ligand_atoms, counthydrophobe, coords_ligand.x, coords_ligand.y, coords_ligand.z)  # Values for SQL statement.
                             cursor.execute(sqlga, valga)  # Execute SQL statement.
-                            position_ligand.append(pos_ligand)
+                            position_ligand.append(coords_ligand)
                             group_ligand.append(counthydrophobe)
                             groups_protein_ligand.append(counthydrophobe)
                             interaction_ligand.append(x[35:39])

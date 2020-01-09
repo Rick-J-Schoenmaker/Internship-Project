@@ -251,7 +251,7 @@ def Protein_LigandData():
                         interaction_protein.append(i[35:39])
                         group_type.append(7)
                     if "NegIonizable" in family_protein:
-                        valga = (8, count_ligand_atoms, countnegionizable, pos_protein.x, pos_protein.y, pos_protein.z)  # Values for SQL statement.
+                        valga = (8, count_ligand_atoms, countnegionizable, pos_protein.x, pos_protein.y, pos_protein.z) # Values for SQL statement.
                         cursor.execute(sqlga, valga)  # Execute SQL statement.
                         position_protein.append(pos_protein)
                         group_protein.append(countnegionizable)

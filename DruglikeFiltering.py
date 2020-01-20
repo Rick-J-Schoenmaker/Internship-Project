@@ -1,18 +1,12 @@
 import os
 import shutil
-
-import matplotlib
 import rdkit
-
 from rdkit import Chem
 from rdkit.Chem import Lipinski
 from rdkit.Chem import ChemicalFeatures
 from rdkit import RDConfig
 from rdkit.Chem import Crippen
 from rdkit.Chem import Descriptors
-import matplotlib.pyplot as plt
-import numpy as np
-
 
 sdfFiles = []
 smilesList = []

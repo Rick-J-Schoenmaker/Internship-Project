@@ -89,13 +89,13 @@ try:
             aromaticProtein.append(i)
 
         cursor.execute(
-            "SELECT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  4 ")
+            "SELECT DISTINCT end_concept.interactions.inter_id, end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_li  = group_id WHERE group_type_id_fk =  4 ")
         hydrophobeli = cursor.fetchall()
         for i in hydrophobeli:
             hydrophobeLigand.append(i)
 
         cursor.execute(
-            "SELECT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk =  4 ")
+            "SELECT DISTINCT end_concept.interactions.inter_id,end_concept.group_atoms.pseudo_x, pseudo_y, pseudo_z FROM end_concept.group_atoms INNER JOIN end_concept.interactions ON group_id_pro  = group_id WHERE group_type_id_fk =  4 ")
         hydrophobepro = cursor.fetchall()
         for i in hydrophobepro:
             hydrophobeProtein.append(i)
@@ -386,25 +386,6 @@ try:
         countpz = -1
         countnumberinter = 0
         countdistancehydrohydro = 0
-        countidlig = 0
-        countidpro = 0
-        listHydrophobeLigandSortDup = []
-        listHydrophobeProteinSortDup = []
-
-        while countidlig + 3 <= len(listHydrophobeLigandSort):
-            if listHydrophobeLigandSortDup.__contains__(listHydrophobeLigandSort[countidlig]) == False:
-                listHydrophobeLigandSortDup.append(listHydrophobeLigandSort[countidlig])
-                listHydrophobeLigandSortDup.append(listHydrophobeLigandSort[countidlig + 1])
-                listHydrophobeLigandSortDup.append(listHydrophobeLigandSort[countidlig + 2])
-                listHydrophobeLigandSortDup.append(listHydrophobeLigandSort[countidlig + 3])
-            countidlig += 4
-        while countidpro + 3 <= len(listHydrophobeProteinSort):
-            if listHydrophobeProteinSortDup.__contains__(listHydrophobeProteinSort[countidpro]) == False:
-                listHydrophobeProteinSortDup.append(listHydrophobeProteinSort[countidpro])
-                listHydrophobeProteinSortDup.append(listHydrophobeProteinSort[countidpro + 1])
-                listHydrophobeProteinSortDup.append(listHydrophobeProteinSort[countidpro + 2])
-                listHydrophobeProteinSortDup.append(listHydrophobeProteinSort[countidpro + 3])
-            countidpro += 4
         count0 = 0
         count1 = 0
         count2 = 0
@@ -415,52 +396,62 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthli = len(listHydrophobeLigandSortDup) - 4
-        countlengthpro = len(listHydrophobeProteinSortDup) - 4
+        print(len(listHydrophobeLigandSort))
+        print(len(listHydrophobeProteinSort))
+        countlengthli = len(listHydrophobeLigandSort) -5
+        countlengthpro = len(listHydrophobeProteinSort) -5
+        print(listHydrophobeLigandSort[0:10])
+        print(listHydrophobeProteinSort[0:10])
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listHydrophobeLigandSortDup[countinterl] == listHydrophobeProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
-                         float(listHydrophobeLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
-                         float(listHydrophobeProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancehydrohydro += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listHydrophobeLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listHydrophobeLigandSort[countlx]), float(listHydrophobeLigandSort[countly]),
+                 float(listHydrophobeLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listHydrophobeProteinSort[countinterp])
+            distanceProteinlist.append((float(listHydrophobeProteinSort[countpx]), float(listHydrophobeProteinSort[countpy]),
+                         float(listHydrophobeProteinSort[countpz])))
+        dict_protein = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein.items():
+            if dict_ligand.__contains__(kp):
+                a = numpy.array(dict_protein.get(kp))
+                b = numpy.array(dict_ligand.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancehydrohydro += dist
+            if 0 <= dist <= 0.5:
+                count0 += 1
+            if 0.5 <= dist <= 1:
+                count1 += 1
+            if 1 <= dist <= 1.5:
+                count2 += 1
+            if 1.5 <= dist <= 2:
+                count3 += 1
+            if 2 <= dist <= 2.5:
+                count4 += 1
+            if 2.5 <= dist <= 3:
+                count5 += 1
+            if 3 <= dist <= 3.5:
+                count6 += 1
+            if 3.5 <= dist <= 4:
+                count7 += 1
+            if 4 <= dist <= 4.5:
+                count8 += 1
+            if 4.5 <= dist <= 5:
+                count9 += 1
         print("Average distance between Hydrophobe atoms on the ligand and Hydrophobe atoms on the protein")
         print(countdistancehydrohydro / countnumberinter)
         print("Number of interactions between Hydrophobe atoms on the ligand and Hydrophobe atoms on the protein")
@@ -503,25 +494,6 @@ try:
         countpz = -1
         countnumberinter = 0
         countdistancehydroluhydrolu = 0
-        countidlig = 0
-        countidpro = 0
-        listHydrophobeLumpedLigandSortDup = []
-        listHydrophobeLumpedProteinSortDup = []
-
-        while countidlig + 3 <= len(listHydrophobeLumpedLigandSort):
-            if listHydrophobeLumpedLigandSortDup.__contains__(listHydrophobeLumpedLigandSort[countidlig]) == False:
-                listHydrophobeLumpedLigandSortDup.append(listHydrophobeLumpedLigandSort[countidlig])
-                listHydrophobeLumpedLigandSortDup.append(listHydrophobeLumpedLigandSort[countidlig + 1])
-                listHydrophobeLumpedLigandSortDup.append(listHydrophobeLumpedLigandSort[countidlig + 2])
-                listHydrophobeLumpedLigandSortDup.append(listHydrophobeLumpedLigandSort[countidlig + 3])
-            countidlig += 4
-        while countidpro + 3 <= len(listHydrophobeLumpedProteinSort):
-            if listHydrophobeLumpedProteinSortDup.__contains__(listHydrophobeLumpedProteinSort[countidpro]) == False:
-                listHydrophobeLumpedProteinSortDup.append(listHydrophobeLumpedProteinSort[countidpro])
-                listHydrophobeLumpedProteinSortDup.append(listHydrophobeLumpedProteinSort[countidpro + 1])
-                listHydrophobeLumpedProteinSortDup.append(listHydrophobeLumpedProteinSort[countidpro + 2])
-                listHydrophobeLumpedProteinSortDup.append(listHydrophobeLumpedProteinSort[countidpro + 3])
-            countidpro += 4
         count0 = 0
         count1 = 0
         count2 = 0
@@ -532,56 +504,63 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthli = len(listHydrophobeLumpedLigandSortDup) - 4
-        countlengthpro = len(listHydrophobeLumpedProteinSortDup) - 4
+        countlengthli = len(listHydrophobeLumpedLigandSort) - 5
+        countlengthpro = len(listHydrophobeLumpedProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listHydrophobeLumpedLigandSortDup[countinterl] == listHydrophobeLumpedProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]),
-                                     float(listHydrophobeLumpedLigandSortDup[countly]),
-                                     float(listHydrophobeLumpedLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]),
-                                     float(listHydrophobeLumpedProteinSortDup[countpy]),
-                                     float(listHydrophobeLumpedProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancehydroluhydrolu += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listHydrophobeLumpedLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listHydrophobeLumpedLigandSort[countlx]), float(listHydrophobeLumpedLigandSort[countly]),
+                 float(listHydrophobeLumpedLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listHydrophobeLumpedProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listHydrophobeLumpedProteinSort[countpx]), float(listHydrophobeLumpedProteinSort[countpy]),
+                 float(listHydrophobeLumpedProteinSort[countpz])))
+
+        dict_protein_hydro_lumped = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_hydro_lumped = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_hydro_lumped.items():
+            if dict_ligand_hydro_lumped.__contains__(kp):
+                a = numpy.array(dict_protein_hydro_lumped.get(kp))
+                b = numpy.array(dict_ligand_hydro_lumped.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancehydroluhydrolu += dist
+                if 0 <= dist <= 0.5:
+                    count0 += 1
+                if 0.5 <= dist <= 1:
+                    count1 += 1
+                if 1 <= dist <= 1.5:
+                    count2 += 1
+                if 1.5 <= dist <= 2:
+                    count3 += 1
+                if 2 <= dist <= 2.5:
+                    count4 += 1
+                if 2.5 <= dist <= 3:
+                    count5 += 1
+                if 3 <= dist <= 3.5:
+                    count6 += 1
+                if 3.5 <= dist <= 4:
+                    count7 += 1
+                if 4 <= dist <= 4.5:
+                    count8 += 1
+                if 4.5 <= dist <= 5:
+                    count9 += 1
         print("Average distance between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydroluhydrolu / countnumberinter)
-        print(
-            "Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
+        print("Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -593,6 +572,7 @@ try:
         print(count7)
         print(count8)
         print(count9)
+
 
         ## Interaction between a hydrophobic atom on ligand with LumpedHydrophobic atoms on the protein.
         count0 = 0
@@ -615,56 +595,40 @@ try:
         countpz = -1
         countdistancehydrohydrolu = 0
         countnumberinter = 0
-        countlengthli = len(listHydrophobeLigandSortDup) - 4
-        countlengthpro = len(listHydrophobeLumpedProteinSortDup) - 4
-        while countinterl != countlengthli:
-            countinterl += 4
-            countlx += 4
-            countly += 4
-            countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listHydrophobeLigandSortDup[countinterl] == listHydrophobeLumpedProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listHydrophobeLigandSortDup[countlx]), float(listHydrophobeLigandSortDup[countly]),
-                         float(listHydrophobeLigandSortDup[countlz])))
-                    b = numpy.array((float(listHydrophobeLumpedProteinSortDup[countpx]),
-                                     float(listHydrophobeLumpedProteinSortDup[countpy]),
-                                     float(listHydrophobeLumpedProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancehydrohydrolu += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+        countlengthli = len(listHydrophobeLigandSort) - 5
+        countlengthpro = len(listHydrophobeLumpedProteinSort) - 5
+        dist = 0
+        for kp, vp in dict_protein_hydro_lumped.items():
+            if dict_ligand.__contains__(kp):
+                a = numpy.array(dict_protein_hydro_lumped.get(kp))
+                b = numpy.array(dict_ligand.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancehydrohydrolu += dist
+                if 0 <= dist <= 0.5:
+                    count0 += 1
+                if 0.5 <= dist <= 1:
+                    count1 += 1
+                if 1 <= dist <= 1.5:
+                    count2 += 1
+                if 1.5 <= dist <= 2:
+                    count3 += 1
+                if 2 <= dist <= 2.5:
+                    count4 += 1
+                if 2.5 <= dist <= 3:
+                    count5 += 1
+                if 3 <= dist <= 3.5:
+                    count6 += 1
+                if 3.5 <= dist <= 4:
+                    count7 += 1
+                if 4 <= dist <= 4.5:
+                    count8 += 1
+                if 4.5 <= dist <= 5:
+                    count9 += 1
+
         print("Average distance between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydrohydrolu / countnumberinter)
-        print(
-            "Number of interactions between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
+        print("Number of interactions between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -677,7 +641,7 @@ try:
         print(count8)
         print(count9)
 
-        # Interactions between LumpedHydrophobic atoms on the ligand and a Hydrophobe atom on the protein.
+        # # Interactions between LumpedHydrophobic atoms on the ligand and a Hydrophobe atom on the protein.
         count0 = 0
         count1 = 0
         count2 = 0
@@ -688,7 +652,6 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countdistancehydroluhydro = 0
         countinterl = -4
         countinterp = -4
         countlx = -3
@@ -697,57 +660,42 @@ try:
         countpx = -3
         countpy = -2
         countpz = -1
+        countdistancehydroluhydro = 0
         countnumberinter = 0
-        countlengthli = len(listHydrophobeLumpedLigandSortDup) - 4
-        countlengthpro = len(listHydrophobeProteinSortDup) - 4
-        while countinterl != countlengthli:
-            countinterl += 4
-            countlx += 4
-            countly += 4
-            countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listHydrophobeLumpedLigandSortDup[countinterl] == listHydrophobeProteinSortDup[countinterp]:
-                    a = numpy.array((float(listHydrophobeLumpedLigandSortDup[countlx]),
-                                     float(listHydrophobeLumpedLigandSortDup[countly]),
-                                     float(listHydrophobeLumpedLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listHydrophobeProteinSortDup[countpx]), float(listHydrophobeProteinSortDup[countpy]),
-                         float(listHydrophobeProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancehydroluhydro += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
-        print("Average distance between LumpedHydrophobe atoms on the ligand and a Hydrophobe atom on the protein")
+        countlengthli = len(listHydrophobeLumpedLigandSort) - 5
+        countlengthpro = len(listHydrophobeProteinSort) - 5
+        dist = 0
+        for kp, vp in dict_protein.items():
+            if dict_ligand_hydro_lumped.__contains__(kp):
+                a = numpy.array(dict_protein.get(kp))
+                b = numpy.array(dict_ligand_hydro_lumped.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancehydroluhydro += dist
+                if 0 <= dist <= 0.5:
+                    count0 += 1
+                if 0.5 <= dist <= 1:
+                    count1 += 1
+                if 1 <= dist <= 1.5:
+                    count2 += 1
+                if 1.5 <= dist <= 2:
+                    count3 += 1
+                if 2 <= dist <= 2.5:
+                    count4 += 1
+                if 2.5 <= dist <= 3:
+                    count5 += 1
+                if 3 <= dist <= 3.5:
+                    count6 += 1
+                if 3.5 <= dist <= 4:
+                    count7 += 1
+                if 4 <= dist <= 4.5:
+                    count8 += 1
+                if 4.5 <= dist <= 5:
+                    count9 += 1
+
+        print("Average distance between a LumpedHydrophobe atom on the ligand and Hydrophobe atoms on the protein")
         print(countdistancehydroluhydro / countnumberinter)
-        print(
-            "Number of interactions between LumpedHydrophobe atoms on the ligand and a Hydrophobe atom on the protein")
+        print("Number of interactions between a LumpedHydrophobe atom on the ligand and Hydrophobe atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -1284,13 +1232,13 @@ try:
 
     def main():
         Statements()
-        Proteinwithinteraction()
-        Calcaverageinteraction()
-        DonorAcceptor()
+        # Proteinwithinteraction()
+        # Calcaverageinteraction()
+        # DonorAcceptor()
         Hydrophobic()
-        Aromatic()
-        CationAnion()
-        CationAromatic()
+        # Aromatic()
+        # CationAnion()
+        # CationAromatic()
 
     main()
 except (Exception, psycopg2.Error) as error:

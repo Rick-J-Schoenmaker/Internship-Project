@@ -390,14 +390,18 @@ def Protein_LigandData():
 def PDBProteinParser():
     parser = PDBParser()  # Call the PDBParser function
     pdbPocketFile.sort()
+    countlines = 0
     for value in pdbPocketFile:
         with open(value) as infile:
             for line in infile:
+                countlines +=1
                 if line.__contains__("HEADER"):
                     listPath.insert(0, line.strip("HEADER").strip("\n"))
                     listPath.insert(1, value)
                     continue
-
+                elif countlines == 1 and line.__contains__("HEADER") is not True:
+                    print("Corrupt PDB File detected at:" + (value))
+            countlines = 0
 
     return;
 
@@ -609,9 +613,9 @@ def ProteinData():
 
 def main():
     openfolder()
-    Protein_LigandData()
+    # Protein_LigandData()
     PDBProteinParser()
-    Interactions()
+    # Interactions()
     # ProteinData()
 
 

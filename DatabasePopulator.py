@@ -1,6 +1,6 @@
 ### Author: Rick Schoenmaker
-### Version 1.9
-### Last updated: 26-11-19
+### Version 1.91
+### Last updated: 23-01-20
 import math
 
 import numpy

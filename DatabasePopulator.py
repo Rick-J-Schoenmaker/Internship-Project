@@ -5,7 +5,6 @@ import math
 
 import numpy
 import psycopg2
-import shutil
 
 from Bio.PDB import *
 
@@ -64,13 +63,13 @@ groups_protein_ligand = []
 interaction_protein = []
 interaction_ligand = []
 
-Hydrophobic_list = ["ALA", "VAL", "ILE", "LEU", "MET", "PHE", "TYR", "TRP"]
+Hydrophobic_list = ["ALA", "VAL", "ILE", "LEU", "MET", "PHE", "TYR", "TRP"] # list of Hydrophobic Amino acids
 
 def openfolder():
     # folder with all subfolders
     folders = []  # list with all the folders within the PDBBind 2018version folder.
     files = []  # list with all the file paths
-    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"):
+    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"):# input the location of the dataset filtered by DruglikeFiltering.py here.
         if entry.is_dir():
             folders.append(entry.path)  # fill list with folderpaths
 
@@ -92,7 +91,6 @@ def openfolder():
             pdbProteinFile.append(value)
         elif "pocket.pdb" in value:
             pdbPocketFile.append(value)
-
     return;
 
 # This function implements RDkit to retrieve atom binding information from sdf files.
@@ -132,7 +130,7 @@ def Protein_LigandData():
     while '   ' in mol2threeletter:
         mol2threeletter.remove('   ')
     try:
-        connection = psycopg2.connect(user="postgres",
+        connection = psycopg2.connect(user="postgres",  # The variables used to connect to the database.
                                       password="Gerbils1",
                                       host="localhost",
                                       port="5433",
@@ -405,7 +403,7 @@ def PDBProteinParser():
 
 def Interactions():
     try:
-        connection = psycopg2.connect(user="postgres",
+        connection = psycopg2.connect(user="postgres",    # The variables used to connect to the database.
                                       password="Gerbils1",
                                       host="localhost",
                                       port="5433",
@@ -455,7 +453,6 @@ def Interactions():
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
 
-
     finally:
         # closing database connection.
         if (connection):
@@ -468,7 +465,7 @@ def ProteinData():
     connection = ()
     # Try to make connection and fill a database.
     try:
-        connection = psycopg2.connect(user="postgres",
+        connection = psycopg2.connect(user="postgres",      # The variables used to connect to the database.
                                       password="Gerbils1",
                                       host="localhost",
                                       port="5433",
@@ -593,7 +590,7 @@ def ProteinData():
                 countsmiles += 1
                 vals = (mol2substructurefiles[countsmiles], smilesList[countsmiles])  # Values for SQL statement.
             cursor.execute(sqls, vals)  # Execute SQL statement.
-        cursor.execute("DELETE FROM end_concept.ligand a USING ( SELECT MIN(ctid) as ctid, ligand_id FROM end_concept.ligand GROUP BY ligand_id HAVING COUNT(*) > 1) b WHERE a.ligand_id = b.ligand_id AND a.ctid <> b.ctid")
+        cursor.execute("DELETE FROM end_concept.ligand a USING ( SELECT MIN(ctid) as ctid, ligand_id FROM end_concept.ligand GROUP BY ligand_id HAVING COUNT(*) > 1) b WHERE a.ligand_id = b.ligand_id AND a.ctid <> b.ctid") # Deleting duplicate ligands from the database
         connection.commit()
 
     except (Exception, psycopg2.Error) as error:
@@ -605,15 +602,12 @@ def ProteinData():
             connection.close()
             print("PostgreSQL connection is closed")
 
-
-
-
 def main():
     openfolder()
-    # Protein_LigandData()
+    Protein_LigandData()
     PDBProteinParser()
-    # Interactions()
-    # ProteinData()
+    Interactions()
+    ProteinData()
 
 
 

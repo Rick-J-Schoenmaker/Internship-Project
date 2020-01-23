@@ -149,12 +149,10 @@ def Protein_LigandData():
         sqlatom = "INSERT INTO end_concept.atoms(atom_id, atom) VALUES (%s,%s)"
         sqlga = "INSERT INTO end_concept.group_atoms(group_type_id_fk, atom_id_fk,group_id,pseudo_x,pseudo_y,pseudo_z) VALUES (%s,%s,%s,%s,%s,%s)"
         sqlpro = "INSERT INTO end_concept.pro_conform(pdb_id,chain_id,x,y,z,atom_id) VALUES (%s,%s,%s,%s,%s,%s)"
-        sqlinter = "INSERT INTO end_concept.interactions(group_id_li, group_id_pro) VALUES (%s,%s)"
         count_ligand_atoms = 0
         endfamily = []
         countgroup = -1
         countligandid = -1
-        listPDBSub= []
         countdonor = 0
         countacceptor = 1
         countaromatic = 2
@@ -509,7 +507,6 @@ def ProteinData():
             rows = (line.strip("\n").split('\t') for line in infile)
             dict_three_letter = {row[1]: row[0:] for row in rows}
         while count < lenlistpath:
-            # countligandname += 1
             length -= 1
             data = parser.get_structure(id=listPath[countheader], file=listPath[countpath])
             atom_list = []

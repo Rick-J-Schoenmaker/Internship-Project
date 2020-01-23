@@ -386,82 +386,6 @@ def Protein_LigandData():
             print("PostgreSQL connection is closed")
 
 
-def Mol2Splitter():
-    mol2moleculefiles = []
-    filteredmol2moleculefiles = []
-    list_length = 0
-
-    for value in mol2File:  # loop through all mol2 files in the mol2Files list.
-        with open(value) as infile:
-            copy = False
-            for line in infile:
-                if line.strip() == "@<TRIPOS>MOLECULE":
-                    copy = True
-                    continue
-                elif line.strip() == "@<TRIPOS>ATOM":
-                    copy = False
-                    continue
-                elif copy:
-                    mol2moleculefiles.append(line.strip("\n"))  # append all lines between molecule and atom.
-
-        with open(value) as infile:
-            copy = False
-            for line in infile:
-                if line.strip() == "@<TRIPOS>ATOM":
-                    mol2Atomfiles.append("###")
-                    copy = True
-                    continue
-                elif line.strip() == "@<TRIPOS>BOND":
-                    copy = False
-                    continue
-                elif copy:
-                    mol2Atomfiles.append(line.strip("\n"))  # append all lines between atom and bond.
-
-        with open(value) as infile:
-            mol2bondfiles.append("###")
-            copy = False
-            for line in infile:
-                if line.strip() == "@<TRIPOS>BOND":
-                    copy = True
-                    continue
-                elif line.strip() == "@<TRIPOS>SUBSTRUCTURE":
-                    copy = False
-                    continue
-                elif copy:
-                    mol2bondfiles.append(line.strip("\n"))  # append all lines between bond and substructure.
-        with open(value) as infile:
-            copy = False
-            for line in infile:
-                if line.strip() == "@<TRIPOS>SUBSTRUCTURE":
-                    copy = True
-                    continue
-                elif line.strip() == "@<TRIPOS>MOLECULE":
-                    copy = False
-                    continue
-                elif copy:
-                    mol2substructurefiles.append(
-                        str(line[7:10]).strip("\n"))  # append all lines between substructure and molecule.
-    while '' in mol2substructurefiles:
-        mol2substructurefiles.remove('')
-
-
-    # Filter out empty objects from the list.
-    filteredmol2moleculefiles = [x for x in mol2moleculefiles if len(x.strip('')) > 0]
-    # Get length of filtered molecule files
-    list_length = len(filteredmol2moleculefiles)
-    for protein in filteredmol2moleculefiles[0:list_length:4]:
-        listLigandName.append(protein)  # fill list with ligandnames.
-
-    for atoms in filteredmol2moleculefiles[1:list_length:4]:
-        listNumAtoms.append(atoms)  # fill list with atom numbers
-    for mol_type in filteredmol2moleculefiles[2:list_length:4]:
-        listMolType.append(mol_type)  # fill list with molecule types
-
-    for charge_type in filteredmol2moleculefiles[3:list_length:4]:
-        listChargeType.append(charge_type)  # fill list with charge type
-
-    return;
-
 # Function that parses PDB protein files.
 def PDBProteinParser():
     parser = PDBParser()  # Call the PDBParser function
@@ -686,7 +610,6 @@ def ProteinData():
 def main():
     openfolder()
     Protein_LigandData()
-    Mol2Splitter()
     PDBProteinParser()
     Interactions()
     # ProteinData()

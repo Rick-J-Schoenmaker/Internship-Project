@@ -35,7 +35,16 @@ try:
     listPosionizableProteinSortDup = []
     listAromaticLigandSortDup = []
     listAromaticProteinSortDup = []
-
+    count0 = 0
+    count1 = 0
+    count2 = 0
+    count3 = 0
+    count4 = 0
+    count5 = 0
+    count6 = 0
+    count7 = 0
+    count8 = 0
+    count9 = 0
 
     def Statements():
         # Extract pdb ids from the database of the protein groups that interact joined on atom ids.
@@ -396,12 +405,8 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        print(len(listHydrophobeLigandSort))
-        print(len(listHydrophobeProteinSort))
         countlengthli = len(listHydrophobeLigandSort) -5
         countlengthpro = len(listHydrophobeProteinSort) -5
-        print(listHydrophobeLigandSort[0:10])
-        print(listHydrophobeProteinSort[0:10])
         interLigandList = []
         distanceLigandlist = []
         interProteinList = []
@@ -585,14 +590,6 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countinterl = -4
-        countinterp = -4
-        countlx = -3
-        countly = -2
-        countlz = -1
-        countpx = -3
-        countpy = -2
-        countpz = -1
         countdistancehydrohydrolu = 0
         countnumberinter = 0
         countlengthli = len(listHydrophobeLigandSort) - 5
@@ -652,14 +649,6 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countinterl = -4
-        countinterp = -4
-        countlx = -3
-        countly = -2
-        countlz = -1
-        countpx = -3
-        countpy = -2
-        countpz = -1
         countdistancehydroluhydro = 0
         countnumberinter = 0
         countlengthli = len(listHydrophobeLumpedLigandSort) - 5
@@ -1232,13 +1221,13 @@ try:
 
     def main():
         Statements()
-        # Proteinwithinteraction()
-        # Calcaverageinteraction()
-        # DonorAcceptor()
+        Proteinwithinteraction()
+        Calcaverageinteraction()
+        DonorAcceptor()
         Hydrophobic()
-        # Aromatic()
-        # CationAnion()
-        # CationAromatic()
+        Aromatic()
+        CationAnion()
+        CationAromatic()
 
     main()
 except (Exception, psycopg2.Error) as error:

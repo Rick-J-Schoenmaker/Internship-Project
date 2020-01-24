@@ -429,26 +429,27 @@ def Interactions():
                             cursor.execute(sqlinter, valinter)
                     #  Selects hydrophobic interactions with a 4.5 angstrom cut-off
                     if dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 4 or \
-                    dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
-                    dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
-                    dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 4:
+                       dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
+                       dict_groupid.get(dict_ligand.get(kl)) == 4 and dict_groupid.get(dict_protein.get(kp)) == 5 or \
+                       dict_groupid.get(dict_ligand.get(kl)) == 5 and dict_groupid.get(dict_protein.get(kp)) == 4:
                         if dist <= 4.5:
                             valinter = (dict_ligand.get(kl), dict_protein.get(kp))
                             cursor.execute(sqlinter, valinter)
                     # Selects donor-acceptor interactions with a 4.4 angstrom cut-off
-                    if dict_groupid.get(dict_ligand.get(kl)) == 1 and dict_groupid.get(dict_protein.get(kp)) == 2 or\
+                    if dict_groupid.get(dict_ligand.get(kl)) == 1 and dict_groupid.get(dict_protein.get(kp)) == 2 or \
                        dict_groupid.get(dict_ligand.get(kl)) == 2 and dict_groupid.get(dict_protein.get(kp)) == 1:
                         if dist <= 4.4:
                             valinter = (dict_ligand.get(kl), dict_protein.get(kp))
                             cursor.execute(sqlinter, valinter)
                     # Selects cation - anion interactions and cation - aromatic interactions:
-                    if dict_groupid.get(dict_ligand.get(kl)) == 8 and dict_groupid.get(dict_protein.get(kp)) == 6 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 3 and dict_groupid.get(dict_protein.get(kp)) == 6 or\
-                       dict_groupid.get(dict_ligand.get(kl)) == 6 and dict_groupid.get(dict_protein.get(kp)) == 8 or\
+                    if dict_groupid.get(dict_ligand.get(kl)) == 8 and dict_groupid.get(dict_protein.get(kp)) == 6 or \
+                       dict_groupid.get(dict_ligand.get(kl)) == 3 and dict_groupid.get(dict_protein.get(kp)) == 6 or \
+                       dict_groupid.get(dict_ligand.get(kl)) == 6 and dict_groupid.get(dict_protein.get(kp)) == 8 or \
                        dict_groupid.get(dict_ligand.get(kl)) == 6 and dict_groupid.get(dict_protein.get(kp)) == 3:
                         if dist <= 4.5:
-                            valinter = (dict_ligand.get(kl), dict_protein.get(kp))
+                            valinter = (dict_ligand.get(kp), dict_protein.get(kp))
                             cursor.execute(sqlinter, valinter)
+
         connection.commit()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
@@ -607,7 +608,7 @@ def main():
     Protein_LigandData()
     PDBProteinParser()
     Interactions()
-    ProteinData()
+    # ProteinData()
 
 
 

@@ -447,7 +447,7 @@ def Interactions():
                        dict_groupid.get(dict_ligand.get(kl)) == 6 and dict_groupid.get(dict_protein.get(kp)) == 8 or \
                        dict_groupid.get(dict_ligand.get(kl)) == 6 and dict_groupid.get(dict_protein.get(kp)) == 3:
                         if dist <= 4.5:
-                            valinter = (dict_ligand.get(kp), dict_protein.get(kp))
+                            valinter = (dict_ligand.get(kl), dict_protein.get(kp))
                             cursor.execute(sqlinter, valinter)
 
         connection.commit()

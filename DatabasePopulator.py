@@ -608,7 +608,7 @@ def main():
     Protein_LigandData()
     PDBProteinParser()
     Interactions()
-    # ProteinData()
+    ProteinData()
 
 
 

@@ -1,5 +1,5 @@
 # Author: Rick Schoenmaker
-# Date: 12-12-2019
+# Date: 29-01-2020
 # Function: This script extracts data from the PROLI database and calculates numbers such as
 # the amount of interactions and averages.
 import os
@@ -149,44 +149,6 @@ try:
         for i in negionizablepro:
             negionizableProtein.append(i)
 
-
-    def Calcaverageinteraction():
-        strinteractionspdb = ''.join(str(e) for e in interactionspdb)
-        strinteractionspdb = strinteractionspdb.replace(")", ',')
-        listinteractionspdb = strinteractionspdb.split(",")
-        listinteractionspdb = [s.replace("'", '') for s in listinteractionspdb]
-        listinteractionspdb = [s.replace("(", '') for s in listinteractionspdb]
-        listinteractionspdb = [s.strip("''") for s in listinteractionspdb]
-
-        countlistinter = len(listinteractionspdb) - 2
-        listcountperstructure = []
-        countaverageinter = 0
-        templist = []
-        countpdb = -2
-        countinter = -1
-        interlist = []
-        while countinter != countlistinter:
-            countpdb += 2
-            countinter += 2
-            if templist.__contains__(listinteractionspdb.__getitem__(countinter)) == False:
-                templist.append(listinteractionspdb.__getitem__(countinter))
-                interlist.append(listinteractionspdb.__getitem__(countpdb))
-        print(len(templist))
-        count = -1
-        while count != len(list6117) - 1:
-            count += 1
-            listcountperstructure.append(list6117.__getitem__(count))
-            listcountperstructure.append(interlist.count(list6117.__getitem__(count)))
-            countaverageinter += interlist.count(list6117.__getitem__(count))
-        print(countaverageinter)
-        countaverageinter = countaverageinter / len(list6117)
-        print(countaverageinter)
-        print(len(listcountperstructure))
-
-        with open("/home/rick/countinterperstuc.csv", "w") as outfile:
-            for entries in listcountperstructure:
-                outfile.write(str(entries))
-                outfile.write("\n")
 
     def DonorAcceptor():
         # donor Ligand - acceptor Protein interaction calculating function that prepares the list for extracting distances.
@@ -1680,7 +1642,6 @@ try:
 
     def main():
         Statements()
-        # Calcaverageinteraction()
         DonorAcceptor()
         Hydrophobic()
         Aromatic_CationAnion()

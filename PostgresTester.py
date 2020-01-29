@@ -31,10 +31,14 @@ try:
     posionizableProtein = []
     negionizableLigand = []
     negionizableProtein = []
-    listPosionizableLigandSortDup = []
-    listPosionizableProteinSortDup = []
-    listAromaticLigandSortDup = []
-    listAromaticProteinSortDup = []
+
+    listPosionizableProteinSort = []
+    listPosionizableLigandSort = []
+
+    listAromaticProteinSort = []
+    listAromaticLigandSort = []
+
+
     count0 = 0
     count1 = 0
     count2 = 0
@@ -199,10 +203,15 @@ try:
         listAcceptorProteinSort = strAcceptorProtein.split(",")
         listAcceptorProteinSort = [s.replace("'", '') for s in listAcceptorProteinSort]
         listAcceptorProteinSort = [s.replace("(", '') for s in listAcceptorProteinSort]
-        countx = 1
-        county = 2
-        countz = 3
-        count = 0
+        countinterl = -4
+        countinterp = -4
+        countlx = -3
+        countly = -2
+        countlz = -1
+        countpx = -3
+        countpy = -2
+        countpz = -1
+        countnumberinter = 0
         countdistancedalp = 0
         count0 = 0
         count1 = 0
@@ -214,40 +223,92 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        while count != len(donorLigand):
-            a = numpy.array((float(listDonorLigandSort[countx]), float(listDonorLigandSort[county]),
-                             float(listDonorLigandSort[countz])))
-            b = numpy.array((float(listAcceptorProteinSort[countx]), float(listAcceptorProteinSort[county]),
-                             float(listAcceptorProteinSort[countz])))
-            dist = numpy.linalg.norm(a - b)
-            countdistancedalp += dist
-            countx += 4
-            county += 4
-            countz += 4
-            count += 1
-            if 0 <= dist <= 0.5:
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listDonorLigandSort) - 5
+        countlengthpro = len(listAcceptorProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
+        while countinterl != countlengthli:
+            countinterl += 4
+            countlx += 4
+            countly += 4
+            countlz += 4
+            interLigandList.append(listDonorLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listDonorLigandSort[countlx]), float(listDonorLigandSort[countly]),
+                 float(listDonorLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listAcceptorProteinSort[countinterp])
+            distanceProteinlist.append((float(listAcceptorProteinSort[countpx]), float(listAcceptorProteinSort[countpy]),
+                 float(listAcceptorProteinSort[countpz])))
+        dict_protein = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein.items():
+            if dict_ligand.__contains__(kp):
+                a = numpy.array(dict_protein.get(kp))
+                b = numpy.array(dict_ligand.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancedalp += dist
+            if 0 <= dist <= 0.25:
                 count0 += 1
-            if 0.5 <= dist <= 1:
+            if 0.25 <= dist <= 0.5:
                 count1 += 1
-            if 1 <= dist <= 1.5:
+            if 0.5 <= dist <= 0.75:
                 count2 += 1
-            if 1.5 <= dist <= 2:
+            if 0.75 <= dist <= 1:
                 count3 += 1
-            if 2 <= dist <= 2.5:
+            if 1 <= dist <= 1.25:
                 count4 += 1
-            if 2.5 <= dist <= 3:
+            if 1.25 <= dist <= 1.5:
                 count5 += 1
-            if 3 <= dist <= 3.5:
+            if 1.5 <= dist <= 1.75:
                 count6 += 1
-            if 3.5 <= dist <= 4:
+            if 1.75 <= dist <= 2:
                 count7 += 1
-            if 4 <= dist <= 4.5:
+            if 2 <= dist <= 2.25:
                 count8 += 1
-            if 4.5 <= dist <= 5:
+            if 2.25 <= dist <= 2.5:
                 count9 += 1
+            if 2.5 <= dist <= 2.75:
+                count10 += 1
+            if 2.75 <= dist <= 3:
+                count11 += 1
+            if 3 <= dist <= 3.25:
+                count12 += 1
+            if 3.25 <= dist <= 3.5:
+                count13 += 1
+            if 3.5 <= dist <= 3.75:
+                count14 += 1
+            if 3.75 <= dist <= 4:
+                count15 += 1
+            if 4 <= dist <= 4.25:
+                count16 += 1
+            if 4.25 <= dist <= 4.5:
+                count17 += 1
+            if 4.5 <= dist <= 4.75:
+                count18 += 1
+            if 4.75 <= dist <= 5:
+                count19 += 1
         print("Average distance between LigandDonor and ProteinAcceptor:")
-        print(countdistancedalp / len(donorLigand))
+        print(countdistancedalp / countnumberinter)
         print("Distances LigandDonor and ProteinAcceptor")
+        print(countnumberinter)
         print(count0)
         print(count1)
         print(count2)
@@ -258,6 +319,16 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
         # acceptor Ligand - donor Protein interaction calculating function that prepares the list for extracting distances.
         acceptorLigand.sort()
@@ -273,10 +344,15 @@ try:
         listDonorProteinSort = strDonorProtein.split(",")
         listDonorProteinSort = [s.replace("'", '') for s in listDonorProteinSort]
         listDonorProteinSort = [s.replace("(", '') for s in listDonorProteinSort]
-        countx = 1
-        county = 2
-        countz = 3
-        count = 0
+        countinterl = -4
+        countinterp = -4
+        countlx = -3
+        countly = -2
+        countlz = -1
+        countpx = -3
+        countpy = -2
+        countpz = -1
+        countnumberinter = 0
         countdistanceadlp = 0
         count0 = 0
         count1 = 0
@@ -288,44 +364,93 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        while count != len(donorProtein):
-            a = numpy.array((float(listAcceptorLigandSort[countx]), float(listAcceptorLigandSort[county]),
-                             float(listAcceptorLigandSort[countz])))
-            b = numpy.array((float(listDonorProteinSort[countx]), float(listDonorProteinSort[county]),
-                             float(listDonorProteinSort[countz])))
-            dist = numpy.linalg.norm(a - b)
-            countdistanceadlp += dist
-            countx += 4
-            county += 4
-            countz += 4
-            count += 1
-            if 0 <= dist <= 0.5:
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listAcceptorLigandSort) - 5
+        countlengthpro = len(listDonorProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
+        while countinterl != countlengthli:
+            countinterl += 4
+            countlx += 4
+            countly += 4
+            countlz += 4
+            interLigandList.append(listAcceptorLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listAcceptorLigandSort[countlx]), float(listAcceptorLigandSort[countly]),
+                 float(listAcceptorLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listDonorProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listDonorProteinSort[countpx]), float(listDonorProteinSort[countpy]),
+                 float(listDonorProteinSort[countpz])))
+        dict_protein = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein.items():
+            if dict_ligand.__contains__(kp):
+                a = numpy.array(dict_protein.get(kp))
+                b = numpy.array(dict_ligand.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistanceadlp += dist
+            if 0 <= dist <= 0.25:
                 count0 += 1
-            if 0.5 <= dist <= 1:
+            if 0.25 <= dist <= 0.5:
                 count1 += 1
-            if 1 <= dist <= 1.5:
+            if 0.5 <= dist <= 0.75:
                 count2 += 1
-            if 1.5 <= dist <= 2:
+            if 0.75 <= dist <= 1:
                 count3 += 1
-            if 2 <= dist <= 2.5:
+            if 1 <= dist <= 1.25:
                 count4 += 1
-            if 2.5 <= dist <= 3:
+            if 1.25 <= dist <= 1.5:
                 count5 += 1
-            if 3 <= dist <= 3.5:
+            if 1.5 <= dist <= 1.75:
                 count6 += 1
-            if 3.5 <= dist <= 4:
+            if 1.75 <= dist <= 2:
                 count7 += 1
-            if 4 <= dist <= 4.5:
+            if 2 <= dist <= 2.25:
                 count8 += 1
-            if 4.5 <= dist <= 5:
+            if 2.25 <= dist <= 2.5:
                 count9 += 1
+            if 2.5 <= dist <= 2.75:
+                count10 += 1
+            if 2.75 <= dist <= 3:
+                count11 += 1
+            if 3 <= dist <= 3.25:
+                count12 += 1
+            if 3.25 <= dist <= 3.5:
+                count13 += 1
+            if 3.5 <= dist <= 3.75:
+                count14 += 1
+            if 3.75 <= dist <= 4:
+                count15 += 1
+            if 4 <= dist <= 4.25:
+                count16 += 1
+            if 4.25 <= dist <= 4.5:
+                count17 += 1
+            if 4.5 <= dist <= 4.75:
+                count18 += 1
+            if 4.75 <= dist <= 5:
+                count19 += 1
         print("Average distance between LigandAcceptor and ProteinDonor:")
-        print(countdistanceadlp / len(donorProtein))
-        print("Average distance between all Acceptor and Donor interactions:")
-        countdis = countdistanceadlp / len(donorProtein) + countdistancedalp / len(donorLigand)
-        print(countdis / 2)
-
+        print(countdistanceadlp / countnumberinter)
         print("Distances LigandAcceptor and ProteinDonor")
+        print(countnumberinter)
         print(count0)
         print(count1)
         print(count2)
@@ -336,6 +461,21 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
+        print("Average distance between LigandAcceptor and ProteinDonor:")
+        print(countdistanceadlp / len(donorProtein))
+        print("Average distance between all Acceptor and Donor interactions:")
+        countdis = countdistanceadlp / len(donorProtein) + countdistancedalp / len(donorLigand)
+        print(countdis / 2)
 
         print("Total number of interactions between Donors and Acceptors:")
         print(len(donorProtein) + len(donorLigand))
@@ -833,7 +973,7 @@ try:
 
 
 
-    def Aromatic():
+    def Aromatic_CationAnion():
         # Interactions between aromatic rings parts:
         aromaticLigand.sort()
         aromaticProtein.sort()
@@ -861,23 +1001,6 @@ try:
         countpz = -1
         countnumberinter = 0
         countdistancearoaro = 0
-        listcountaromatic = []
-        countidlig = 0
-        countidpro = 0
-        while countidlig + 3 <= len(listAromaticLigandSort):
-            if listAromaticLigandSortDup.__contains__(listAromaticLigandSort[countidlig]) == False:
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 1])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 2])
-                listAromaticLigandSortDup.append(listAromaticLigandSort[countidlig + 3])
-            countidlig += 4
-        while countidpro + 3 <= len(listAromaticProteinSort):
-            if listAromaticProteinSortDup.__contains__(listAromaticProteinSort[countidpro]) == False:
-                listAromaticProteinSortDup.append(listAromaticProteinSort[countidpro])
-                listAromaticProteinSortDup.append(listAromaticProteinSort[countidpro + 1])
-                listAromaticProteinSortDup.append(listAromaticProteinSort[countidpro + 2])
-                listAromaticProteinSortDup.append(listAromaticProteinSort[countidpro + 3])
-            countidpro += 4
         count0 = 0
         count1 = 0
         count2 = 0
@@ -888,55 +1011,93 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthli = len(listAromaticLigandSortDup) - 4
-        countlengthpro = len(listAromaticProteinSortDup) - 4
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listAromaticLigandSort) - 5
+        countlengthpro = len(listAromaticProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listAromaticLigandSortDup[countinterl] == listAromaticProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listAromaticLigandSortDup[countlx]), float(listAromaticLigandSortDup[countly]),
-                         float(listAromaticLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
-                         float(listAromaticProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countdistancearoaro += dist
-                    countnumberinter += 1
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
-        print("Average distance between Aromatic rings on the ligand and Aromatic rings on the protein:")
+            interLigandList.append(listAromaticLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listAromaticLigandSort[countlx]), float(listAromaticLigandSort[countly]),
+                 float(listAromaticLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listAromaticProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listAromaticProteinSort[countpx]), float(listAromaticProteinSort[countpy]),
+                 float(listAromaticProteinSort[countpz])))
+
+        dict_protein_aro = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_aro = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_aro.items():
+            if dict_ligand_aro.__contains__(kp):
+                a = numpy.array(dict_protein_aro.get(kp))
+                b = numpy.array(dict_ligand_aro.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancearoaro += dist
+                if 0 <= dist <= 0.25:
+                    count0 += 1
+                if 0.25 <= dist <= 0.5:
+                    count1 += 1
+                if 0.5 <= dist <= 0.75:
+                    count2 += 1
+                if 0.75 <= dist <= 1:
+                    count3 += 1
+                if 1 <= dist <= 1.25:
+                    count4 += 1
+                if 1.25 <= dist <= 1.5:
+                    count5 += 1
+                if 1.5 <= dist <= 1.75:
+                    count6 += 1
+                if 1.75 <= dist <= 2:
+                    count7 += 1
+                if 2 <= dist <= 2.25:
+                    count8 += 1
+                if 2.25 <= dist <= 2.5:
+                    count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
+        print("Average distance between Aromatic atoms on the ligand and Aromatic atoms on the protein")
         print(countdistancearoaro / countnumberinter)
-        print("Number of interactions between Aromatic rings on the ligand and Aromatic rings on the protein:")
+        print("Number of interactions between Aromatic atoms on the ligand and Aromatic atoms on the protein")
         print(countnumberinter)
         print(count0)
         print(count1)
@@ -948,9 +1109,19 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
-    def CationAnion():
-        # # Interactions between cation and anion #######################################################
+
+        # Interactions between cation and anion #######################################################
         posionizableLigand.sort()
         negionizableProtein.sort()
         negionizableLigand.sort()
@@ -982,6 +1153,7 @@ try:
         listPosionizableProteinSort = [s.replace("'", '') for s in listPosionizableProteinSort]
         listPosionizableProteinSort = [s.replace("(", '') for s in listPosionizableProteinSort]
         listPosionizableProteinSort = [s.replace(")", '') for s in listPosionizableProteinSort]
+
         countinterl = -4
         countinterp = -4
         countlx = -3
@@ -992,24 +1164,6 @@ try:
         countpz = -1
         countnumberinter = 0
         countdistanceposlnegp = 0
-        listNegionizableProteinSortDup = []
-        countidlig = 0
-        countidpro = 0
-        while countidlig + 3 <= len(listPosionizableLigandSort):
-            if listPosionizableLigandSortDup.__contains__(listPosionizableLigandSort[countidlig]) == False:
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 1])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 2])
-                listPosionizableLigandSortDup.append(listPosionizableLigandSort[countidlig + 3])
-            countidlig += 4
-        while countidpro + 3 <= len(listNegionizableProteinSort):
-            if listNegionizableProteinSortDup.__contains__(listNegionizableProteinSort[countidpro]) == False:
-                listNegionizableProteinSortDup.append(listNegionizableProteinSort[countidpro])
-                listNegionizableProteinSortDup.append(listNegionizableProteinSort[countidpro + 1])
-                listNegionizableProteinSortDup.append(listNegionizableProteinSort[countidpro + 2])
-                listNegionizableProteinSortDup.append(listNegionizableProteinSort[countidpro + 3])
-            countidpro += 4
-
         count0 = 0
         count1 = 0
         count2 = 0
@@ -1020,52 +1174,90 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthli = len(listPosionizableLigandSortDup) - 4
-        countlengthpro = len(listNegionizableProteinSortDup) - 4
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listPosionizableLigandSort) - 5
+        countlengthpro = len(listNegionizableProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listPosionizableLigandSortDup[countinterl] == listNegionizableProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listPosionizableLigandSortDup[countlx]), float(listPosionizableLigandSortDup[countly]),
-                         float(listPosionizableLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listNegionizableProteinSortDup[countpx]), float(listNegionizableProteinSortDup[countpy]),
-                         float(listNegionizableProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countdistanceposlnegp += dist
-                    countnumberinter += 1
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listPosionizableLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listPosionizableLigandSort[countlx]), float(listPosionizableLigandSort[countly]),
+                 float(listPosionizableLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listNegionizableProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listNegionizableProteinSort[countpx]), float(listNegionizableProteinSort[countpy]),
+                 float(listNegionizableProteinSort[countpz])))
+
+        dict_protein_neg = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_pos = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_neg.items():
+            if dict_ligand_pos.__contains__(kp):
+                a = numpy.array(dict_protein_neg.get(kp))
+                b = numpy.array(dict_ligand_pos.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistanceposlnegp += dist
+                if 0 <= dist <= 0.25:
+                    count0 += 1
+                if 0.25 <= dist <= 0.5:
+                    count1 += 1
+                if 0.5 <= dist <= 0.75:
+                    count2 += 1
+                if 0.75 <= dist <= 1:
+                    count3 += 1
+                if 1 <= dist <= 1.25:
+                    count4 += 1
+                if 1.25 <= dist <= 1.5:
+                    count5 += 1
+                if 1.5 <= dist <= 1.75:
+                    count6 += 1
+                if 1.75 <= dist <= 2:
+                    count7 += 1
+                if 2 <= dist <= 2.25:
+                    count8 += 1
+                if 2.25 <= dist <= 2.5:
+                    count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
         print("Average distance between Posionizable atoms on the ligand and Negionizable atoms on the protein")
         print(countdistanceposlnegp / countnumberinter)
         print("Number of interactions between Posionizable atoms on the ligand and Negionizable atoms on the protein")
@@ -1080,6 +1272,17 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
+
 
         ###### anion on ligand with cation on protein
         countinterl = -4
@@ -1092,25 +1295,6 @@ try:
         countpz = -1
         countnumberinter = 0
         countdistanceneglposp = 0
-        listNegionizableLigandSortDup = []
-        countidlig = 0
-        countidpro = 0
-
-        while countidlig + 3 <= len(listNegionizableLigandSort):
-            if listNegionizableLigandSortDup.__contains__(listNegionizableLigandSort[countidlig]) == False:
-                listNegionizableLigandSortDup.append(listNegionizableLigandSort[countidlig])
-                listNegionizableLigandSortDup.append(listNegionizableLigandSort[countidlig + 1])
-                listNegionizableLigandSortDup.append(listNegionizableLigandSort[countidlig + 2])
-                listNegionizableLigandSortDup.append(listNegionizableLigandSort[countidlig + 3])
-            countidlig += 4
-        while countidpro + 3 <= len(listPosionizableProteinSort):
-            if listPosionizableProteinSortDup.__contains__(listPosionizableProteinSort[countidpro]) == False:
-                listPosionizableProteinSortDup.append(listPosionizableProteinSort[countidpro])
-                listPosionizableProteinSortDup.append(listPosionizableProteinSort[countidpro + 1])
-                listPosionizableProteinSortDup.append(listPosionizableProteinSort[countidpro + 2])
-                listPosionizableProteinSortDup.append(listPosionizableProteinSort[countidpro + 3])
-            countidpro += 4
-
         count0 = 0
         count1 = 0
         count2 = 0
@@ -1121,52 +1305,90 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countlengthlig = len(listNegionizableLigandSortDup) - 4
-        countlengthpro = len(listPosionizableProteinSortDup) - 4
-        while countinterl != countlengthlig:
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listNegionizableLigandSort) - 5
+        countlengthpro = len(listPosionizableProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
+        while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listNegionizableLigandSortDup[countinterl] == listPosionizableProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listNegionizableLigandSortDup[countlx]), float(listNegionizableLigandSortDup[countly]),
-                         float(listNegionizableLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listPosionizableProteinSortDup[countpx]), float(listPosionizableProteinSortDup[countpy]),
-                         float(listPosionizableProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countdistanceneglposp += dist
-                    countnumberinter += 1
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listNegionizableLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listNegionizableLigandSort[countlx]), float(listNegionizableLigandSort[countly]),
+                 float(listNegionizableLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listPosionizableProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listPosionizableProteinSort[countpx]), float(listPosionizableProteinSort[countpy]),
+                 float(listPosionizableProteinSort[countpz])))
+
+        dict_protein_pos = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_neg = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_pos.items():
+            if dict_ligand_neg.__contains__(kp):
+                a = numpy.array(dict_protein_pos.get(kp))
+                b = numpy.array(dict_ligand_neg.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistanceneglposp += dist
+                if 0 <= dist <= 0.25:
+                    count0 += 1
+                if 0.25 <= dist <= 0.5:
+                    count1 += 1
+                if 0.5 <= dist <= 0.75:
+                    count2 += 1
+                if 0.75 <= dist <= 1:
+                    count3 += 1
+                if 1 <= dist <= 1.25:
+                    count4 += 1
+                if 1.25 <= dist <= 1.5:
+                    count5 += 1
+                if 1.5 <= dist <= 1.75:
+                    count6 += 1
+                if 1.75 <= dist <= 2:
+                    count7 += 1
+                if 2 <= dist <= 2.25:
+                    count8 += 1
+                if 2.25 <= dist <= 2.5:
+                    count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
         print("Average distance between Negionizable atoms on the ligand and Posionizable atoms on the protein")
         print(countdistanceneglposp / countnumberinter)
         print("Number of interactions between Negionizable atoms on the ligand and Posionizable atoms on the protein")
@@ -1181,10 +1403,30 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
 
-    def CationAromatic():
+
         # Interactions between cation on ligand and aromatic rings on the protein.
+        countinterl = -4
+        countinterp = -4
+        countlx = -3
+        countly = -2
+        countlz = -1
+        countpx = -3
+        countpy = -2
+        countpz = -1
+        countnumberinter = 0
+        countdistancecatlarop = 0
         count0 = 0
         count1 = 0
         count2 = 0
@@ -1195,64 +1437,92 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countdistancecatlarop = 0
-        countinterl = 0
-        countinterp = 0
-        countinterl = -4
-        countinterp = -4
-        countlx = -3
-        countly = -2
-        countlz = -1
-        countpx = -3
-        countpy = -2
-        countpz = -1
-        countnumberinter = 0
-        countlengthli = len(listPosionizableLigandSortDup) - 4
-        countlengthpro = len(listAromaticProteinSortDup) - 4
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        print(len(listPosionizableLigandSort))
+        print(len(listAromaticProteinSort))
+        countlengthli = len(listPosionizableLigandSort) - 5
+        countlengthpro = len(listAromaticProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listPosionizableLigandSortDup[countinterl] == listAromaticProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listPosionizableLigandSortDup[countlx]), float(listPosionizableLigandSortDup[countly]),
-                         float(listPosionizableLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listAromaticProteinSortDup[countpx]), float(listAromaticProteinSortDup[countpy]),
-                         float(listAromaticProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancecatlarop += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listPosionizableLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listPosionizableLigandSort[countlx]), float(listPosionizableLigandSort[countly]),
+                 float(listPosionizableLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listAromaticProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listAromaticProteinSort[countpx]), float(listAromaticProteinSort[countpy]),
+                 float(listAromaticProteinSort[countpz])))
+
+        dict_protein_aro = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_pos = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_aro.items():
+            if dict_ligand_pos.__contains__(kp):
+                a = numpy.array(dict_protein_aro.get(kp))
+                b = numpy.array(dict_ligand_pos.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancecatlarop += dist
+                if 0 <= dist <= 0.25:
+                    count0 += 1
+                if 0.25 <= dist <= 0.5:
+                    count1 += 1
+                if 0.5 <= dist <= 0.75:
+                    count2 += 1
+                if 0.75 <= dist <= 1:
+                    count3 += 1
+                if 1 <= dist <= 1.25:
+                    count4 += 1
+                if 1.25 <= dist <= 1.5:
+                    count5 += 1
+                if 1.5 <= dist <= 1.75:
+                    count6 += 1
+                if 1.75 <= dist <= 2:
+                    count7 += 1
+                if 2 <= dist <= 2.25:
+                    count8 += 1
+                if 2.25 <= dist <= 2.5:
+                    count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
         print("Average distance between cation atoms on the ligand and aromatic rings on the protein")
         print(countdistancecatlarop / countnumberinter)
         print("Number of interactions between cation atoms on the ligand and a aromatic rings on the protein")
@@ -1267,8 +1537,27 @@ try:
         print(count7)
         print(count8)
         print(count9)
-
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
         # Interactions between aromatic rings on the ligand and cation on the protein.
+        countinterl = -4
+        countinterp = -4
+        countlx = -3
+        countly = -2
+        countlz = -1
+        countpx = -3
+        countpy = -2
+        countpz = -1
+        countnumberinter = 0
+        countdistancearolcatp = 0
         count0 = 0
         count1 = 0
         count2 = 0
@@ -1279,64 +1568,90 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
-        countdistancearolcatp = 0
-        countinterl = 0
-        countinterp = 0
-        countinterl = -4
-        countinterp = -4
-        countlx = -3
-        countly = -2
-        countlz = -1
-        countpx = -3
-        countpy = -2
-        countpz = -1
-        countnumberinter = 0
-        countlengthli = len(listAromaticLigandSortDup) - 4
-        countlengthpro = len(listPosionizableProteinSortDup) - 4
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
+        countlengthli = len(listAromaticLigandSort) - 5
+        countlengthpro = len(listPosionizableProteinSort) - 5
+        interLigandList = []
+        distanceLigandlist = []
+        interProteinList = []
+        distanceProteinlist = []
         while countinterl != countlengthli:
             countinterl += 4
             countlx += 4
             countly += 4
             countlz += 4
-            while countinterp != countlengthpro:
-                countinterp += 4
-                countpx += 4
-                countpy += 4
-                countpz += 4
-                if listAromaticLigandSortDup[countinterl] == listPosionizableProteinSortDup[countinterp]:
-                    a = numpy.array(
-                        (float(listAromaticLigandSortDup[countlx]), float(listAromaticLigandSortDup[countly]),
-                         float(listAromaticLigandSortDup[countlz])))
-                    b = numpy.array(
-                        (float(listPosionizableProteinSortDup[countpx]), float(listPosionizableProteinSortDup[countpy]),
-                         float(listPosionizableProteinSortDup[countpz])))
-                    dist = numpy.linalg.norm(a - b)
-                    countnumberinter += 1
-                    countdistancearolcatp += dist
-                    if 0 <= dist <= 0.5:
-                        count0 += 1
-                    if 0.5 <= dist <= 1:
-                        count1 += 1
-                    if 1 <= dist <= 1.5:
-                        count2 += 1
-                    if 1.5 <= dist <= 2:
-                        count3 += 1
-                    if 2 <= dist <= 2.5:
-                        count4 += 1
-                    if 2.5 <= dist <= 3:
-                        count5 += 1
-                    if 3 <= dist <= 3.5:
-                        count6 += 1
-                    if 3.5 <= dist <= 4:
-                        count7 += 1
-                    if 4 <= dist <= 4.5:
-                        count8 += 1
-                    if 4.5 <= dist <= 5:
-                        count9 += 1
-            countinterp = -4
-            countpx = -3
-            countpy = -2
-            countpz = -1
+            interLigandList.append(listAromaticLigandSort[countinterl])
+            distanceLigandlist.append(
+                (float(listAromaticLigandSort[countlx]), float(listAromaticLigandSort[countly]),
+                 float(listAromaticLigandSort[countlz])))
+        while countinterp != countlengthpro:
+            countinterp += 4
+            countpx += 4
+            countpy += 4
+            countpz += 4
+            interProteinList.append(listPosionizableProteinSort[countinterp])
+            distanceProteinlist.append(
+                (float(listPosionizableProteinSort[countpx]), float(listPosionizableProteinSort[countpy]),
+                 float(listPosionizableProteinSort[countpz])))
+
+        dict_protein_aro = {kp: vp for kp, vp in zip(interProteinList, distanceProteinlist)}
+        dict_ligand_aro = {kl: vl for kl, vl in zip(interLigandList, distanceLigandlist)}
+        for kp, vp in dict_protein_aro.items():
+            if dict_ligand_aro.__contains__(kp):
+                a = numpy.array(dict_protein_aro.get(kp))
+                b = numpy.array(dict_ligand_aro.get(kp))
+                dist = numpy.linalg.norm(a - b)
+                countnumberinter += 1
+                countdistancearolcatp += dist
+                if 0 <= dist <= 0.25:
+                    count0 += 1
+                if 0.25 <= dist <= 0.5:
+                    count1 += 1
+                if 0.5 <= dist <= 0.75:
+                    count2 += 1
+                if 0.75 <= dist <= 1:
+                    count3 += 1
+                if 1 <= dist <= 1.25:
+                    count4 += 1
+                if 1.25 <= dist <= 1.5:
+                    count5 += 1
+                if 1.5 <= dist <= 1.75:
+                    count6 += 1
+                if 1.75 <= dist <= 2:
+                    count7 += 1
+                if 2 <= dist <= 2.25:
+                    count8 += 1
+                if 2.25 <= dist <= 2.5:
+                    count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
         print("Average distance between aromatic rings on the ligand and cation atoms on the protein")
         print(countdistancearolcatp / countnumberinter)
         print("Number of interactions between aromatic rings on the ligand and cation atoms on the protein ")
@@ -1351,17 +1666,25 @@ try:
         print(count7)
         print(count8)
         print(count9)
-
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
     connection.commit()
 
     def main():
         Statements()
         # Calcaverageinteraction()
-        # DonorAcceptor()
+        DonorAcceptor()
         Hydrophobic()
-        # Aromatic()
-        # CationAnion()
-        # CationAromatic()
+        Aromatic_CationAnion()
+
 
     main()
 except (Exception, psycopg2.Error) as error:

@@ -146,32 +146,6 @@ try:
             negionizableProtein.append(i)
 
 
-    # noinspection PySimplifyBooleanCheck,PySimplifyBooleanCheck
-    def Proteinwithinteraction():
-        folders = []  # list with all the folders within the PDBBind 2018version folder.
-        for entry in os.scandir("/home/rick/Documenten/Rick'spdb"):
-            if entry.is_dir():
-                folders.append(str(entry.path)[32:40].upper())  # fill list with folderpaths
-        folders.sort()  # Sort the list with folders
-        listpdbidsort = []  # Initializing  a list for sorted pdb ids without duplicates
-        count = 0  # Initializing  a count
-        countpdbid = -1
-        for i in pdbids:
-            countpdbid += 1
-            if listpdbidsort.__contains__(pdbids[countpdbid]) == False:
-                listpdbidsort.append(pdbids[countpdbid])
-                count += 1
-        listpdbidsort.sort()
-        for i in listpdbidsort:
-            list6117.append(str(i).strip('(').strip(')').strip("'").replace("'", "").replace(",", ""))
-        list6117.sort()
-        set1 = set(folders)
-        set2 = set(list6117)
-        missing = list(sorted(set1 - set2))
-        print(missing)
-        print(len(set1))
-        print(len(set2))
-
     def Calcaverageinteraction():
         strinteractionspdb = ''.join(str(e) for e in interactionspdb)
         strinteractionspdb = strinteractionspdb.replace(")", ',')
@@ -405,6 +379,16 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
         countlengthli = len(listHydrophobeLigandSort) -5
         countlengthpro = len(listHydrophobeProteinSort) -5
         interLigandList = []
@@ -437,26 +421,46 @@ try:
                 dist = numpy.linalg.norm(a - b)
                 countnumberinter += 1
                 countdistancehydrohydro += dist
-            if 0 <= dist <= 0.5:
+            if 0 <= dist <= 0.25:
                 count0 += 1
-            if 0.5 <= dist <= 1:
+            if 0.25 <= dist <= 0.5:
                 count1 += 1
-            if 1 <= dist <= 1.5:
+            if 0.5 <= dist <= 0.75:
                 count2 += 1
-            if 1.5 <= dist <= 2:
+            if 0.75 <= dist <= 1:
                 count3 += 1
-            if 2 <= dist <= 2.5:
+            if 1 <= dist <= 1.25:
                 count4 += 1
-            if 2.5 <= dist <= 3:
+            if 1.25 <= dist <= 1.5:
                 count5 += 1
-            if 3 <= dist <= 3.5:
+            if 1.5 <= dist <= 1.75:
                 count6 += 1
-            if 3.5 <= dist <= 4:
+            if 1.75 <= dist <= 2:
                 count7 += 1
-            if 4 <= dist <= 4.5:
+            if 2 <= dist <= 2.25:
                 count8 += 1
-            if 4.5 <= dist <= 5:
+            if 2.25 <= dist <= 2.5:
                 count9 += 1
+            if 2.5 <= dist <= 2.75:
+                count10 += 1
+            if 2.75 <= dist <= 3:
+                count11 += 1
+            if 3 <= dist <= 3.25:
+                count12 += 1
+            if 3.25 <= dist <= 3.5:
+                count13 += 1
+            if 3.5 <= dist <= 3.75:
+                count14 += 1
+            if 3.75 <= dist <= 4:
+                count15 += 1
+            if 4 <= dist <= 4.25:
+                count16 += 1
+            if 4.25 <= dist <= 4.5:
+                count17 += 1
+            if 4.5 <= dist <= 4.75:
+                count18 += 1
+            if 4.75 <= dist <= 5:
+                count19 += 1
         print("Average distance between Hydrophobe atoms on the ligand and Hydrophobe atoms on the protein")
         print(countdistancehydrohydro / countnumberinter)
         print("Number of interactions between Hydrophobe atoms on the ligand and Hydrophobe atoms on the protein")
@@ -471,6 +475,16 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
         ## Interaction between LumpedHydrophobic atoms.
         hydrophobeLumpedLigand.sort()
@@ -509,6 +523,16 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
         countlengthli = len(listHydrophobeLumpedLigandSort) - 5
         countlengthpro = len(listHydrophobeLumpedProteinSort) - 5
         interLigandList = []
@@ -543,26 +567,46 @@ try:
                 dist = numpy.linalg.norm(a - b)
                 countnumberinter += 1
                 countdistancehydroluhydrolu += dist
-                if 0 <= dist <= 0.5:
+                if 0 <= dist <= 0.25:
                     count0 += 1
-                if 0.5 <= dist <= 1:
+                if 0.25 <= dist <= 0.5:
                     count1 += 1
-                if 1 <= dist <= 1.5:
+                if 0.5 <= dist <= 0.75:
                     count2 += 1
-                if 1.5 <= dist <= 2:
+                if 0.75 <= dist <= 1:
                     count3 += 1
-                if 2 <= dist <= 2.5:
+                if 1 <= dist <= 1.25:
                     count4 += 1
-                if 2.5 <= dist <= 3:
+                if 1.25 <= dist <= 1.5:
                     count5 += 1
-                if 3 <= dist <= 3.5:
+                if 1.5 <= dist <= 1.75:
                     count6 += 1
-                if 3.5 <= dist <= 4:
+                if 1.75 <= dist <= 2:
                     count7 += 1
-                if 4 <= dist <= 4.5:
+                if 2 <= dist <= 2.25:
                     count8 += 1
-                if 4.5 <= dist <= 5:
+                if 2.25 <= dist <= 2.5:
                     count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
         print("Average distance between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydroluhydrolu / countnumberinter)
         print("Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
@@ -577,6 +621,16 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
 
         ## Interaction between a hydrophobic atom on ligand with LumpedHydrophobic atoms on the protein.
@@ -590,6 +644,16 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
         countdistancehydrohydrolu = 0
         countnumberinter = 0
         countlengthli = len(listHydrophobeLigandSort) - 5
@@ -602,26 +666,46 @@ try:
                 dist = numpy.linalg.norm(a - b)
                 countnumberinter += 1
                 countdistancehydrohydrolu += dist
-                if 0 <= dist <= 0.5:
+                if 0 <= dist <= 0.25:
                     count0 += 1
-                if 0.5 <= dist <= 1:
+                if 0.25 <= dist <= 0.5:
                     count1 += 1
-                if 1 <= dist <= 1.5:
+                if 0.5 <= dist <= 0.75:
                     count2 += 1
-                if 1.5 <= dist <= 2:
+                if 0.75 <= dist <= 1:
                     count3 += 1
-                if 2 <= dist <= 2.5:
+                if 1 <= dist <= 1.25:
                     count4 += 1
-                if 2.5 <= dist <= 3:
+                if 1.25 <= dist <= 1.5:
                     count5 += 1
-                if 3 <= dist <= 3.5:
+                if 1.5 <= dist <= 1.75:
                     count6 += 1
-                if 3.5 <= dist <= 4:
+                if 1.75 <= dist <= 2:
                     count7 += 1
-                if 4 <= dist <= 4.5:
+                if 2 <= dist <= 2.25:
                     count8 += 1
-                if 4.5 <= dist <= 5:
+                if 2.25 <= dist <= 2.5:
                     count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
 
         print("Average distance between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countdistancehydrohydrolu / countnumberinter)
@@ -637,6 +721,16 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
 
         # # Interactions between LumpedHydrophobic atoms on the ligand and a Hydrophobe atom on the protein.
         count0 = 0
@@ -649,6 +743,16 @@ try:
         count7 = 0
         count8 = 0
         count9 = 0
+        count10 = 0
+        count11 = 0
+        count12 = 0
+        count13 = 0
+        count14 = 0
+        count15 = 0
+        count16 = 0
+        count17 = 0
+        count18 = 0
+        count19 = 0
         countdistancehydroluhydro = 0
         countnumberinter = 0
         countlengthli = len(listHydrophobeLumpedLigandSort) - 5
@@ -661,26 +765,46 @@ try:
                 dist = numpy.linalg.norm(a - b)
                 countnumberinter += 1
                 countdistancehydroluhydro += dist
-                if 0 <= dist <= 0.5:
+                if 0 <= dist <= 0.25:
                     count0 += 1
-                if 0.5 <= dist <= 1:
+                if 0.25 <= dist <= 0.5:
                     count1 += 1
-                if 1 <= dist <= 1.5:
+                if 0.5 <= dist <= 0.75:
                     count2 += 1
-                if 1.5 <= dist <= 2:
+                if 0.75 <= dist <= 1:
                     count3 += 1
-                if 2 <= dist <= 2.5:
+                if 1 <= dist <= 1.25:
                     count4 += 1
-                if 2.5 <= dist <= 3:
+                if 1.25 <= dist <= 1.5:
                     count5 += 1
-                if 3 <= dist <= 3.5:
+                if 1.5 <= dist <= 1.75:
                     count6 += 1
-                if 3.5 <= dist <= 4:
+                if 1.75 <= dist <= 2:
                     count7 += 1
-                if 4 <= dist <= 4.5:
+                if 2 <= dist <= 2.25:
                     count8 += 1
-                if 4.5 <= dist <= 5:
+                if 2.25 <= dist <= 2.5:
                     count9 += 1
+                if 2.5 <= dist <= 2.75:
+                    count10 += 1
+                if 2.75 <= dist <= 3:
+                    count11 += 1
+                if 3 <= dist <= 3.25:
+                    count12 += 1
+                if 3.25 <= dist <= 3.5:
+                    count13 += 1
+                if 3.5 <= dist <= 3.75:
+                    count14 += 1
+                if 3.75 <= dist <= 4:
+                    count15 += 1
+                if 4 <= dist <= 4.25:
+                    count16 += 1
+                if 4.25 <= dist <= 4.5:
+                    count17 += 1
+                if 4.5 <= dist <= 4.75:
+                    count18 += 1
+                if 4.75 <= dist <= 5:
+                    count19 += 1
 
         print("Average distance between a LumpedHydrophobe atom on the ligand and Hydrophobe atoms on the protein")
         print(countdistancehydroluhydro / countnumberinter)
@@ -696,6 +820,17 @@ try:
         print(count7)
         print(count8)
         print(count9)
+        print(count10)
+        print(count11)
+        print(count12)
+        print(count13)
+        print(count14)
+        print(count15)
+        print(count16)
+        print(count17)
+        print(count18)
+        print(count19)
+
 
 
     def Aromatic():
@@ -1221,13 +1356,12 @@ try:
 
     def main():
         Statements()
-        Proteinwithinteraction()
-        Calcaverageinteraction()
-        DonorAcceptor()
+        # Calcaverageinteraction()
+        # DonorAcceptor()
         Hydrophobic()
-        Aromatic()
-        CationAnion()
-        CationAromatic()
+        # Aromatic()
+        # CationAnion()
+        # CationAromatic()
 
     main()
 except (Exception, psycopg2.Error) as error:

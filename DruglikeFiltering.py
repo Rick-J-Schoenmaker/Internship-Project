@@ -20,7 +20,7 @@ files = []  # list with all the file paths
 
 
 def openfolder():
-    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"): #give pathway to PDBBind dataset.
+    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"): # Give pathway to PDBBind dataset.
         if entry.is_dir():
             folders.append(entry.path)  # fill list with folderpaths
 

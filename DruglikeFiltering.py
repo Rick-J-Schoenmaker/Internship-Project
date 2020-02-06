@@ -20,7 +20,7 @@ files = []  # list with all the file paths
 
 
 def openfolder():
-    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"):
+    for entry in os.scandir("/home/rick/Documenten/Rick'spdb"): #give pathway to PDBBind dataset.
         if entry.is_dir():
             folders.append(entry.path)  # fill list with folderpaths
 
@@ -82,7 +82,7 @@ def rdkit():
                 family = str(f.GetFamily())  # Get type of atom
     print(listRicksPDB)
     for value in listRicksPDB:
-        shutil.move(str(value)[:-15], "/home/rick/Documenten/Rick'spdb")
+        shutil.move(str(value)[:-15], "/home/rick/Documenten/Rick'spdb")   # Give pathway to directory
     return;
 
 

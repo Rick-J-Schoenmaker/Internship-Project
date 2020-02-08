@@ -6,6 +6,8 @@ import os
 
 import numpy
 import psycopg2
+import numpy as np
+import matplotlib.pyplot as plt
 
 try:
     connection = psycopg2.connect(user="postgres",
@@ -271,26 +273,23 @@ try:
         print(countdistancedalp / countnumberinter)
         print("Distances LigandDonor and ProteinAcceptor")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances LigandDonor - ProteinAcceptor')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
         # acceptor Ligand - donor Protein interaction calculating function that prepares the list for extracting distances.
         acceptorLigand.sort()
@@ -413,26 +412,23 @@ try:
         print(countdistanceadlp / countnumberinter)
         print("Distances LigandAcceptor and ProteinDonor")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances LigandAcceptor - ProteinDonor')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
         print("Average distance between LigandAcceptor and ProteinDonor:")
         print(countdistanceadlp / len(donorProtein))
         print("Average distance between all Acceptor and Donor interactions:")
@@ -567,26 +563,23 @@ try:
         print(countdistancehydrohydro / countnumberinter)
         print("Number of interactions between Hydrophobe atoms on the ligand and Hydrophobe atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Hydrophobic Atoms - Hydrophobic Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
         ## Interaction between LumpedHydrophobic atoms.
         hydrophobeLumpedLigand.sort()
@@ -713,26 +706,23 @@ try:
         print(countdistancehydroluhydrolu / countnumberinter)
         print("Number of interactions between LumpedHydrophobe atoms on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances LumpedHydrophobic Atoms - LumpedHydrophobic Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
 
         ## Interaction between a hydrophobic atom on ligand with LumpedHydrophobic atoms on the protein.
@@ -813,26 +803,23 @@ try:
         print(countdistancehydrohydrolu / countnumberinter)
         print("Number of interactions between a Hydrophobe atom on the ligand and LumpedHydrophobe atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Hydrophobic Atoms - LumpedHydrophobic Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
         # # Interactions between LumpedHydrophobic atoms on the ligand and a Hydrophobe atom on the protein.
         count0 = 0
@@ -912,26 +899,23 @@ try:
         print(countdistancehydroluhydro / countnumberinter)
         print("Number of interactions between a LumpedHydrophobe atom on the ligand and Hydrophobe atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances LumpedHydrophobic Atoms - Hydrophobic Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
 
 
@@ -983,6 +967,8 @@ try:
         count17 = 0
         count18 = 0
         count19 = 0
+        count20 = 0
+        count21 = 0
         countlengthli = len(listAromaticLigandSort) - 5
         countlengthpro = len(listAromaticProteinSort) - 5
         interLigandList = []
@@ -1057,31 +1043,34 @@ try:
                     count18 += 1
                 if 4.75 <= dist <= 5:
                     count19 += 1
+                if 5 <= dist <= 5.25:
+                    count20 += 1
+                if 5.25 <= dist <= 5.5:
+                    count21 += 1
         print("Average distance between Aromatic atoms on the ligand and Aromatic atoms on the protein")
         print(countdistancearoaro / countnumberinter)
         print("Number of interactions between Aromatic atoms on the ligand and Aromatic atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(22)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19, count20, count21]
 
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Aromatic Pseudo-Atoms - Aromatic Pseudo-Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5', '5 | 5.25',
+                       '5.25 | 5.5'], rotation=90)
+
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+
+        plt.tight_layout()
+        plt.show()
 
         # Interactions between cation and anion #######################################################
         posionizableLigand.sort()
@@ -1224,26 +1213,23 @@ try:
         print(countdistanceposlnegp / countnumberinter)
         print("Number of interactions between Posionizable atoms on the ligand and Negionizable atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Cation Atoms - Anion Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
 
         ###### anion on ligand with cation on protein
@@ -1355,26 +1341,23 @@ try:
         print(countdistanceneglposp / countnumberinter)
         print("Number of interactions between Negionizable atoms on the ligand and Posionizable atoms on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Anion Atoms - Cation Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
 
 
 
@@ -1489,26 +1472,24 @@ try:
         print(countdistancecatlarop / countnumberinter)
         print("Number of interactions between cation atoms on the ligand and a aromatic rings on the protein")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Cation Atoms - Aromatic Pseudo-Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
+
         # Interactions between aromatic rings on the ligand and cation on the protein.
         countinterl = -4
         countinterp = -4
@@ -1618,26 +1599,23 @@ try:
         print(countdistancearolcatp / countnumberinter)
         print("Number of interactions between aromatic rings on the ligand and cation atoms on the protein ")
         print(countnumberinter)
-        print(count0)
-        print(count1)
-        print(count2)
-        print(count3)
-        print(count4)
-        print(count5)
-        print(count6)
-        print(count7)
-        print(count8)
-        print(count9)
-        print(count10)
-        print(count11)
-        print(count12)
-        print(count13)
-        print(count14)
-        print(count15)
-        print(count16)
-        print(count17)
-        print(count18)
-        print(count19)
+        x = np.arange(20)
+        y = [count0, count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11, count12,
+             count13, count14, count15, count16, count17, count18, count19]
+
+        plt.figure()
+        # plt.plot(x, y)
+        plt.bar(x, y, alpha=0.2, color=('blue'), edgecolor='cyan')
+        plt.xlabel("Distance in (Å)")
+        plt.ylabel("Count of interactions")
+        plt.title('Distances Aromatic Pseudo-Atoms - Cation Atoms ')
+        plt.xticks(x, ['0 | 0.25', '0.25 | 0.5', '0.5 | 0.75', '0.75 | 1', '1 | 1.25', '1.25 | 1.5', '1.5 | 1.75',
+                       '1.75 | 2', '2 | 2.25', '2.25 | 2.5', '2.5 | 2.25', '2.25 | 2.5', '2.5 | 3', '3.25 | 3.5',
+                       '3.5 | 3.75', '3.75 | 4', '4 | 4.25', '4.25 | 4.5', '4.5 | 4.75', '4.75 | 5'], rotation=90)
+        # set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=9)
+        plt.tight_layout()
+        plt.show()
     connection.commit()
 
     def main():

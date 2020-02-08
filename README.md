@@ -8,32 +8,23 @@ interactions with data derived from the Protein Data Bank called DrugLi.
 These instructions will get you a copy of the project up and running on your local machine.
 
 ### Prerequisites
-Retrieve the structural data from PDBBind: http://www.pdbbind.org.cn/
+```
+Retrieve the structural data from PDBBind: http://www.pdbbind.org.cn/\
+```
+```
 Python (3.7)
+```
+```
 Conda(4.7.12)
+```
+```
 Numpy(1.16.4)
+```
+```
 RDKit (Q3 2019)
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-To create a dataset 
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
 ```
 
-### And coding style tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 To create the database it is neccesary to run the scripts in the following steps:

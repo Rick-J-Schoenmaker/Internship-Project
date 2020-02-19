@@ -55,11 +55,6 @@ def rdkit():
     lip_MolW_count = 0
     count_element = 0
 
-    family = ""
-    pos = ""
-    smiles = ""
-    list1 = []
-
     for x in sdfFiles:
         suppl = Chem.SDMolSupplier(x)   # Get supplement from SDF File.
         try:

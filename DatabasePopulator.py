@@ -131,7 +131,7 @@ def Protein_LigandData():
         mol2threeletter.remove('   ')
     try:
         connection = psycopg2.connect(user="postgres",  # The variables used to connect to the database.
-                                      password="Gerbils1",
+                                      password="",
                                       host="localhost",
                                       port="5433",
                                       database="postgres")
@@ -404,7 +404,7 @@ def PDBProteinParser():
 def Interactions():
     try:
         connection = psycopg2.connect(user="postgres",    # The variables used to connect to the database.
-                                      password="Gerbils1",
+                                      password="",
                                       host="localhost",
                                       port="5433",
                                       database="postgres")
